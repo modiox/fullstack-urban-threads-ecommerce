@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query"
 
-import { Button } from './components/ui/button'
+import { Button } from "./components/ui/button"
 import {
   Card,
   CardContent,
@@ -8,26 +8,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from './components/ui/card'
-import { Product } from './types'
-import api from './api'
+} from "./components/ui/card"
+import { Product } from "./types"
+import api from "./api"
 
-import './App.css'
+import "./App.css"
 
 function App() {
   const getProducts = async () => {
     try {
-      const res = await api.get('/products')
+      const res = await api.get("/products")
       return res.data
     } catch (error) {
       console.error(error)
-      return Promise.reject(new Error('Something went wrong'))
+      return Promise.reject(new Error("Something went wrong"))
     }
   }
 
   // Queries
   const { data, error } = useQuery<Product[]>({
-    queryKey: ['products'],
+    queryKey: ["products"],
     queryFn: getProducts
   })
 

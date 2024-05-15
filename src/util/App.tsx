@@ -1,6 +1,7 @@
 // import React, { useEffect, useState } from "react"
 //import axios from "axios"
 // import { Product } from "../types"
+import Footer from "@/components/layout/Footer"
 import Index from "../routes"
 // import api from "../api"
 import "./App.css"
@@ -20,6 +21,7 @@ const App = () => {
     <div>
       <Index/>
       <h1> Welcome... </h1>
+      <Footer/>
     </div>
   )
 }

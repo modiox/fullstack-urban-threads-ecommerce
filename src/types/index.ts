@@ -2,8 +2,22 @@ import { ReactNode } from "react"
 
 export type Product = {
   price: ReactNode
-  id: string
+  productId: string
   name: string
-  categoryId: number
+  image: string
+  quantity: number
+  categories: Category[]
+
+}
+
+export type Category = { 
+  categoryId: string
+  categoryName: string
+  description: string
+  products: Product[]
+  sold: number
+  shipping: number
+  createdAt: string
+
 }
 

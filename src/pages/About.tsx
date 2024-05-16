@@ -1,14 +1,22 @@
 import React from "react";
 import muiTheme from "@/util/muiTheme";
 import { ThemeProvider } from "@emotion/react"
+import { Typography } from "@mui/material";
 
 export const About = () => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <div className="about-container">
-        <p className="about-text">
-          <h1> Hello from the about page </h1>
-        </p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh"
+        }}
+        className="about-container"
+      >
+        <h2 className="contact-title">About Us</h2>
+        <p className="contact-text">About page</p>
       </div>
     </ThemeProvider>
   )

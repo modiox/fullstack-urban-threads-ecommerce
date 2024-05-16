@@ -1,12 +1,19 @@
 import TitlePage from "@/components/ui/TitlePage"
 import React from "react"
 import  muiTheme from "@/util/muiTheme"
-import { ThemeProvider } from "@mui/material"
+import { ThemeProvider, Typography } from "@mui/material"
 
 export const Contact = () => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <div className="contact-container">
+      <div
+        style={{
+          display: "grid",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh"
+        }}
+        className="contact-container">
         <TitlePage title="Contact" />
         <h2 className="contact-title">Contact Us</h2>
         <p className="contact-text">

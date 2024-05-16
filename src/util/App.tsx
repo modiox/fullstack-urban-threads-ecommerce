@@ -20,7 +20,6 @@ const App = () => {
   return (
     <div>
       <Index/>
-      <h1> Welcome... </h1>
       <Footer/>
     </div>
   )

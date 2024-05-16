@@ -3,14 +3,14 @@ import { createTheme } from "@mui/material/styles"
 
 // Define your Material-UI theme
 const muiTheme = createTheme({
-  palette: {
+  palette: { //colors
     primary: {
       main: "#3f51b5"
     },
     secondary: {
       main: "#f50057"
     }
-  },
+  }, //font
   typography: {
     fontFamily: "Arial, sans-serif",
     fontSize: 14.5
@@ -30,7 +30,8 @@ const muiTheme = createTheme({
           marginLeft: "20px"
         }
       }
-    }
+    },
+    
   }
 })
 

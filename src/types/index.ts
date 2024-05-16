@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 export type Product = {
   price: ReactNode
   productId: string
-  name: string
+  productName: string
   image: string
   quantity: number
   categories: Category[]

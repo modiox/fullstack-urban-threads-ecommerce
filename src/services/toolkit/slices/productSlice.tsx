@@ -30,7 +30,7 @@ const productSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload
+      state.products = action.payload.data.items.$values
       state.error = null
       state.isLoading = false 
     })

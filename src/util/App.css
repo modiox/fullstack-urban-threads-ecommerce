@@ -40,3 +40,28 @@
 .read-the-docs {
   color: #888;
 }
+
+.product-title {
+  padding: 10; 
+  padding-bottom: 15px;
+  font-family:  monospace;
+}
+
+
+.cat-filter-button {
+  color: #3f51b5;
+  font-size: 15px;
+  outline: auto;
+  font-family: monospace;
+}
+.price-filter-button {
+  color: #3f51b5;
+  font-size: 15px;
+  outline: auto;
+  font-family: monospace;
+
+}
+
+.number-btn {
+  margin-top: 150px;
+}

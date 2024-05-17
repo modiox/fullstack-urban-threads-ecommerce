@@ -7,7 +7,10 @@ import Contact from "../pages/Contact"
 import Error from "../pages/Error"
 import ProductList from "../components/ui/Products"
 import Navbar from "@/components/layout/Navbar"
-import Category from "../components/ui/Category"
+// import Category from "../components/ui/Category"
+import ProductDetails from "@/pages/ProductDetails"
+import Products from "../components/ui/Products"
+import Dashboard from "@/pages/Dashboard"
 
 const Index = () => {
   return (
@@ -15,10 +18,12 @@ const Index = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/products" element={<ProductList/>} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/products" element={<Products />} />
+        {/* <Route path="/category" element={<Category />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/products/:productId" element={<ProductDetails />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

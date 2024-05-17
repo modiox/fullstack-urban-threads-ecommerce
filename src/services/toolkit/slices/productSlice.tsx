@@ -1,22 +1,39 @@
 import api from "@/api";
-import { Product } from "@/types";
+import { ProductState } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 //type definition of the initialState
-export type ProductState = {
-  products: Product[]
-  error: null | string
-  isLoading: boolean
-}
 
-const initialState = { 
+const initialState: ProductState = { 
     products: [],
+    totalPages: 0,
+    product: null,
     error: null,
     isLoading: false
 }
-export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-    const response = await api.get(`/products`)
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async ({
+    pageNumber,
+    pageSize,
+    keyword
+  }: {
+    pageNumber: number
+    pageSize: number
+    keyword: string
+  }) => {
+    const response = await api.get(
+      `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&keyword=${keyword}`
+    )
     return response.data
+  }
+)
+
+export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productId: string | undefined) => {
+  const response = await api.get(`/products/${productId}`)
+   console.log(response.data)
+  return response.data
+ 
 })
 
 //cases: pending, fulfilling, rejected
@@ -29,8 +46,11 @@ const productSlice = createSlice({
       state.error = null
       state.isLoading = true
     })
+    
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload.data.items.$values
+      state.products = action.payload.data.items
+      // console.log(action.payload.data.items)
+      state.totalPages = action.payload.data.totalPages
       state.error = null
       state.isLoading = false 
     })
@@ -38,6 +58,22 @@ const productSlice = createSlice({
       state.error = null
       state.isLoading = false
     })
+
+    //ProductbyName states 
+        builder.addCase(fetchProductsById.pending, (state) => {
+          state.error = null
+          state.isLoading = true
+        })
+        builder.addCase(fetchProductsById.fulfilled, (state, action) => {
+          console.log(action.payload.data.items)
+          state.product = action.payload
+          state.error = null
+          state.isLoading = false
+        })
+        builder.addCase(fetchProductsById.rejected, (state) => {
+          state.error = null
+          state.isLoading = false
+        })
   }
 })
 

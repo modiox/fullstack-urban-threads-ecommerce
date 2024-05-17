@@ -5,9 +5,10 @@ export type Product = {
   productId: string
   productName: string
   image: string
+  description: string
   quantity: number
   categories: Category[]
-
+  createdAt: string
 }
 
 export type Category = { 
@@ -21,3 +22,21 @@ export type Category = {
 
 }
 
+export type ProductState = {
+  products: []
+  totalPages: number 
+  product: Product | null
+  error: null | string
+  isLoading: boolean
+}
+
+// export type Products = {
+//   price: ReactNode
+//   productId: string
+//   productName: string
+//   image: string
+//   description: string
+//   quantity: number
+//   categories: Category[]
+//   createdAt: string
+// }

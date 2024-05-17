@@ -3,17 +3,18 @@ import { createTheme } from "@mui/material/styles"
 
 // Define your Material-UI theme
 const muiTheme = createTheme({
-  palette: { //colors
+  palette: {
+    //colors
     primary: {
-      main: "#3f51b5"
+      main: "#666699"
     },
     secondary: {
-      main: "#f50057"
+      main: "#996699"
     }
   }, //font
   typography: {
-    fontFamily: "Arial, sans-serif",
-    fontSize: 14.5
+    fontFamily: "Raleway, Arial",
+    fontSize: 15.5
   },
   components: {
     MuiTextField: {
@@ -30,8 +31,7 @@ const muiTheme = createTheme({
           marginLeft: "20px"
         }
       }
-    },
-    
+    }
   }
 })
 

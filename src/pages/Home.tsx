@@ -12,8 +12,8 @@ export const Home = () => {
       <Container>
         <CssBaseline />
         <Typography>
-       
-          <div className="home-container"
+          <div
+            className="home-container"
             style={{
               display: "grid",
               justifyContent: "center",
@@ -21,7 +21,7 @@ export const Home = () => {
               height: "70vh"
             }}
           >
-            <div >
+            <div>
               <TitlePage title="Home" />
               <h2> URBAN THREADS</h2>
               <Link to={"/products"}>

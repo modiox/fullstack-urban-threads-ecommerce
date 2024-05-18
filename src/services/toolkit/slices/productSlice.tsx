@@ -16,14 +16,16 @@ export const fetchProducts = createAsyncThunk(
   async ({
     pageNumber,
     pageSize,
-    keyword
+    keyword,
+    sortBy
   }: {
     pageNumber: number
     pageSize: number
     keyword: string
+    sortBy: string
   }) => {
     const response = await api.get(
-      `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&keyword=${keyword}`
+      `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&keyword=${keyword}&sortBy=${sortBy}`
     )
     return response.data
   }

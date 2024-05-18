@@ -48,8 +48,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        eCommerce  <br></br>
+      <Link color="inherit">
+        URBAN THREADS  <br></br>
       </Link>
       {new Date().getFullYear()}
       {"."}
@@ -87,7 +87,7 @@ export default function StickyFooter() {
               <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
                 <Typography variant="body1">
                   {" "}
-                  Subscribe to our Newsletter for the latest trends...{" "}
+                  Join the community {" "}
                 </Typography>
               </Container>
               <TextField
@@ -95,7 +95,7 @@ export default function StickyFooter() {
                 type="email"
                 name="subs"
                 id="outlined-basic"
-                placeholder="Enter your email.."
+                placeholder="email.."
                 color="secondary"
                 sx={{ marginLeft: "20px" }}
                 size="small"

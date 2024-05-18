@@ -11,6 +11,7 @@ import Navbar from "@/components/layout/Navbar"
 import ProductDetails from "@/pages/ProductDetails"
 import Products from "../components/ui/Products"
 import Dashboard from "@/pages/Dashboard"
+import Register from "@/pages/Register"
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<Register/>} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

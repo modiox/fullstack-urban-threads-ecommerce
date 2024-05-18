@@ -1,25 +1,16 @@
-// import React, { useEffect, useState } from "react"
-//import axios from "axios"
-// import { Product } from "../types"
 import Footer from "@/components/layout/Footer"
 import Index from "../routes"
-// import api from "../api"
 import "./App.css"
-// import { Button } from "../components/ui/button"
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardFooter,
-//   CardHeader,
-//   CardTitle
-// } from "../components/ui/card"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 
 
 const App = () => { 
   return (
     <div>
       <Index/>
+      <ToastContainer/>
       <Footer/>
     </div>
   )

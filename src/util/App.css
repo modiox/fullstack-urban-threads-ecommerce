@@ -47,7 +47,9 @@
   font-family:  monospace;
 }
 
-
+.home-container {
+  font-size: 20px
+}
 .cat-filter-button {
   color: #3f51b5;
   font-size: 15px;

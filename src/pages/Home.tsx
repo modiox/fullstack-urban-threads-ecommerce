@@ -13,7 +13,7 @@ export const Home = () => {
         <CssBaseline />
         <Typography>
        
-          <div
+          <div className="home-container"
             style={{
               display: "grid",
               justifyContent: "center",
@@ -21,13 +21,13 @@ export const Home = () => {
               height: "70vh"
             }}
           >
-            <div className="home-container">
+            <div >
               <TitlePage title="Home" />
-              <h2 className="home-title">Welcome to the eCommerce website </h2>
+              <h2> URBAN THREADS</h2>
               <Link to={"/products"}>
-                {" "}
-                <Button> List of All Products </Button>{" "}
+                <Button> SHOP NOW</Button>
               </Link>
+              <div> </div>
             </div>
           </div>
         </Typography>

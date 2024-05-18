@@ -14,21 +14,21 @@ const muiTheme = createTheme({
   }, //font
   typography: {
     fontFamily: "Raleway, Arial",
-    fontSize: 15.5
+    fontSize: 14.5
   },
   components: {
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: "10px", // Add margin bottom for TextField
-          marginTop: "10px"
+          marginBottom: "5px", // Add margin bottom for TextField
+          marginTop: "5px"
         }
       }
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          marginLeft: "20px"
+          marginLeft: "5px"
         }
       }
     }

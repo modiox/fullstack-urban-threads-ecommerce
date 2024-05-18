@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
 import { fetchProducts } from "@/services/toolkit/slices/productSlice"
 import { Product } from "@/types"
-import { Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
+import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
+import { SelectChangeEvent } from "@mui/material/Select"
+
 
 import "@/util/App.css"
 import ProductSidebar from "../layout/sidebar/ProductSidebar"
@@ -19,13 +21,14 @@ import ProductSidebar from "../layout/sidebar/ProductSidebar"
    const [pageNumber, setPageNumber] = useState(1) //page number is 1 by default
    const [pageSize, setPageSize] = useState(3) //page size is 5 by default
    const [keyword, setSearchKeyword] = useState(" ")
+    const [sortBy, setSortBy] = useState("Name")
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchProducts({ pageNumber, pageSize, keyword}))
+      await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy}))
     }
     fetchData()
-  }, [pageNumber, keyword])
+  }, [pageNumber, keyword, sortBy])
 
   const handelPreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1)
@@ -36,6 +39,9 @@ import ProductSidebar from "../layout/sidebar/ProductSidebar"
   }
    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
      setSearchKeyword(e.target.value)
+   }
+   const handleSortChange = (e: SelectChangeEvent<string>) => {
+     setSortBy(e.target.value)
    }
    return (
      <ThemeProvider theme={muiTheme}>
@@ -49,7 +55,9 @@ import ProductSidebar from "../layout/sidebar/ProductSidebar"
          }}
        >
          <div>
-           <Typography variant="h3" sx={{margin: 8}}>Products</Typography>
+           <Typography variant="h3" sx={{ margin: 8 }}>
+             Products
+           </Typography>
            <div>
              <ProductSidebar />
            </div>
@@ -59,18 +67,32 @@ import ProductSidebar from "../layout/sidebar/ProductSidebar"
                Error: {error}
              </Typography>
            )}
-           <TextField
-             variant="outlined"
-             type="text"
-             name="search"
-             id="outlined-basic"
-             placeholder="Search products..."
-             color="secondary"
-             sx={{ marginLeft: "20px", marginBottom: "60px" }}
-             size="small"
-             value={keyword}
-             onChange={handleSearchChange}
-           />
+           <FormControl fullWidth>
+             <TextField
+               label="Search Products"
+               id="demo-simple-select"
+               variant="outlined"
+               type="text"
+               name="search"
+               color="secondary"
+               size="small"
+               value={keyword}
+               onChange={handleSearchChange}
+             />
+           </FormControl>
+           <FormControl fullWidth>
+             <InputLabel id="demo-simple-select-label">Filter </InputLabel>
+             <Select
+               labelId="demo-simple-select-label"
+               id="demo-simple-select"
+               label="Filter"
+               onChange={handleSortChange} >
+               <MenuItem value={10}>Name</MenuItem>
+               <MenuItem value={20}>Price</MenuItem>
+               <MenuItem value={30}>Ascending</MenuItem>
+               <MenuItem value={40}>Descending</MenuItem>
+             </Select>
+           </FormControl>
            <Grid
              container
              spacing={{ xs: 2, md: 3 }}

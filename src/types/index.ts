@@ -30,13 +30,20 @@ export type ProductState = {
   isLoading: boolean
 }
 
-// export type Products = {
-//   price: ReactNode
-//   productId: string
-//   productName: string
-//   image: string
-//   description: string
-//   quantity: number
-//   categories: Category[]
-//   createdAt: string
-// }
+export type User = {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  image?: string
+  address: string
+  isAdmin?: boolean
+  isBanned?: boolean
+  createdAt?: string
+}
+export type UserState = {
+  // user: User | null
+ // totalPages: number
+  error: null | string
+  isLoading: boolean
+}

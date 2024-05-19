@@ -109,7 +109,7 @@ const Products = () => {
             {products &&
               products.length > 0 &&
               products.map((product: Product) => (
-                <Grid item xs={12} sm={6} md={4} key={product.productId}>
+                <Grid item xs={12} sm={6} md={4} key={product.productID}>
                   <SingleProduct product={product} />
                 </Grid>
               ))}

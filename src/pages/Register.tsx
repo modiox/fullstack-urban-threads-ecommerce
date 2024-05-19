@@ -37,6 +37,7 @@ function Copyright(props: any) {
 type FormData = {
   firstName: string
   lastName: string
+  username: string
   email: string
   password: string
   address: string
@@ -60,7 +61,7 @@ export default function SignUp() {
     try {
       const response = await dispatch(registerUser(data))
       console.log("Response from register" + response.payload.message)
-      toast.success("User createdd successfully")
+      toast.success("User created successfully")
       // navigate("/login")
     } catch (error: any) {
       console.error("Error:", error)
@@ -155,6 +156,28 @@ export default function SignUp() {
                   )}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name="username"
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: "username is required",
+                  
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="username"
+                      fullWidth
+                      error={!!errors.username}
+                      helperText={errors.username ? errors.username.message : ""}
+                      autoComplete="username"
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <Controller
                   name="password"
@@ -174,20 +197,13 @@ export default function SignUp() {
                   )}
                 />
               </Grid>
-               <Grid item xs={12}>
+              <Grid item xs={12}>
                 <Controller
                   name="address"
                   control={control}
                   defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="Address"
-                      fullWidth
-                    />
-                  )}
+                  render={({ field }) => <TextField {...field} label="Address" fullWidth />}
                 />
-                
               </Grid>
               <Grid item xs={12}>
                 <Controller

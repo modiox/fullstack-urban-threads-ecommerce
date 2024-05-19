@@ -13,8 +13,8 @@ export const registerUser = createAsyncThunk(
   "userSlice/registerUser",
   async (newUser: User) => {
     const response = await api.post("/signup", newUser)
-    console.log(response.data.message)
-    return response.data.data.message
+    console.log(response)
+    return response.data
   }
 )
 export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData: LoginFormData) => {

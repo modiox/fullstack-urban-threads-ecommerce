@@ -1,3 +1,5 @@
+
+
 import React from "react"
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import Avatar from "@mui/material/Avatar"
@@ -26,12 +28,12 @@ function Copyright(props: any) {
       <Link color="inherit" href="https://mui.com/">
       </Link>
       {new Date().getFullYear()}
-     
+
     </Typography>
   )
 }
 
-export default function LogIn() {
+export function LoginUser() {
   const dispatch: AppDispatch = useDispatch()
   //after registration navigate to Login page
   const navigate = useNavigate()
@@ -47,7 +49,7 @@ export default function LogIn() {
 
     try {
       const response = await dispatch(loginUser(data))
-      console.log("Response from register" + response.payload.message)
+      console.log("Response from register" + response.payload)
       toast.success("Welcome")
       // navigate("/") with user logged in
     } catch (error: any) {
@@ -97,7 +99,7 @@ export default function LogIn() {
                       label="Email Address"
                       fullWidth
                       error={!!errors.email}
-                      helperText={errors.email ? errors.email.message : ""}
+                      helperText={errors.email ? errors.email?.message : ""}
                       autoComplete="email"
                     />
                   )}

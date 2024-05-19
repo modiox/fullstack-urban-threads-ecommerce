@@ -14,13 +14,13 @@ const ProductDetails = () => {
 
      useEffect(() => {
        const fetchData = async () => {
-         await dispatch(fetchProductsById(productId))
+         await dispatch(fetchProductsById(productID))
        }
        fetchData()
      }, [])
 
-    const {productId} = useParams<{productId: string}>()
-    console.log(productId) //it console logs the product name !? 
+    const {productID} = useParams<{productID: string}>()
+    console.log(productID) 
   return (
     <ThemeProvider theme={muiTheme}>
       <div
@@ -40,10 +40,10 @@ const ProductDetails = () => {
               <img src={product.image} alt={product.productName}></img>
               <div className="product-body">
                 <h3> {product.productName}</h3>
-                <p> {product.image}</p>
+                {/* <p> {product.image}</p> */}
                 <p> Price: {product.price}</p>
                 <p> Quanitity: {product.quantity}</p>
-                <p> Book Arrival: {new Date(product.createdAt).toLocaleDateString()}</p>
+                <p> Item Arrival: {new Date(product.createdAt).toLocaleDateString()}</p>
               </div>
             </div>
           )}

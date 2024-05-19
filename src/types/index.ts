@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 
 export type Product = {
   price: ReactNode
-  productId: string
+  productID: string
   productName: string
   image: string
   description: string
@@ -34,6 +34,7 @@ export type User = {
   firstName: string
   lastName: string
   email: string
+  username: string
   password: string
   image?: string
   address: string

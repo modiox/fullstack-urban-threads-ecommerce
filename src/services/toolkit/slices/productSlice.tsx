@@ -31,8 +31,8 @@ export const fetchProducts = createAsyncThunk(
   }
 )
 
-export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productId: string | undefined) => {
-  const response = await api.get(`/products/${productId}`)
+export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productID: string | undefined) => {
+  const response = await api.get(`/products/post/${productID}`)
    console.log(response.data)
   return response.data
  
@@ -51,7 +51,6 @@ const productSlice = createSlice({
     
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload.data.items
-      // console.log(action.payload.data.items)
       state.totalPages = action.payload.data.totalPages
       state.error = null
       state.isLoading = false 

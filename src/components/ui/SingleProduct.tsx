@@ -67,7 +67,7 @@ const SingleProduct = (props: { product:Product  }) => {
             size="small" >
             Add To Cart
           </Button>
-          <Link to={`/products/${product.productId}`} style={{ textDecoration: "none" }}>
+          <Link to={`/products/${product.productID}`} style={{ textDecoration: "none" }}>
             <Button variant="contained" color="secondary" size="small">
               Show Details
             </Button>

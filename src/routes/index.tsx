@@ -13,6 +13,7 @@ import Products from "../components/ui/Products"
 import Dashboard from "@/pages/Dashboard"
 import Register from "@/pages/Register"
 import { Login } from "react-admin"
+import { LoginUser } from "@/pages/LoginUser"
 
 
 const Index = () => {
@@ -25,7 +26,7 @@ const Index = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/login" element={<LoginUser/>} />
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />

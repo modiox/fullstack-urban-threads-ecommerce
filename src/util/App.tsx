@@ -5,14 +5,15 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 
-
-const App = () => { 
+export const App = () => { 
   return (
+   
     <div>
       <Index/>
       <ToastContainer/>
       <Footer/>
     </div>
+    
   )
 }
   

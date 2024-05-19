@@ -1,5 +1,5 @@
 import api from "@/api"
-import {  User, UserState } from "@/types"
+import {  LoginFormData, User, UserState } from "@/types"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 //type definition of the initialState
@@ -17,6 +17,11 @@ export const registerUser = createAsyncThunk(
     return response.data.data.message
   }
 )
+export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData: LoginFormData) => {
+  const response = await api.post("/login", userData)
+  console.log(response.data.message)
+  return response.data.data.message
+})
 
 //cases: pending, fulfilling, rejected
 const userSlice = createSlice({

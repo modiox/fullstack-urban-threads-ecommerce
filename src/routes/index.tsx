@@ -12,23 +12,27 @@ import ProductDetails from "@/pages/ProductDetails"
 import Products from "../components/ui/Products"
 import Dashboard from "@/pages/Dashboard"
 import Register from "@/pages/Register"
+import { Login } from "react-admin"
+
 
 const Index = () => {
   return (
+   
     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        {/* <Route path="/category" element={<Category />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/register" element={<Register/>} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
+
   )
 }
 

@@ -31,6 +31,7 @@ const Products = () => {
   const [keyword, setSearchKeyword] = useState("")
   const [sortBy, setSortBy] = useState("Name")
 
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
@@ -104,7 +105,7 @@ const Products = () => {
             </Select>
           </FormControl>
 
-          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent="center">
+          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12  }} justifyContent="center">
             {products &&
               products.length > 0 &&
               products.map((product: Product) => (

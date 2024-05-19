@@ -67,7 +67,7 @@ const productSlice = createSlice({
         })
         builder.addCase(fetchProductsById.fulfilled, (state, action) => {
           console.log(action.payload.data.items)
-          state.product = action.payload
+          state.product = action.payload.data
           state.error = null
           state.isLoading = false
         })

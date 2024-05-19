@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ThemeProvider } from "@mui/material"
+import { Button, ThemeProvider } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
 import { useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
@@ -41,8 +41,11 @@ const ProductDetails = () => {
               <div className="product-body">
                 <h3> {product.productName}</h3>
                 {/* <p> {product.image}</p> */}
-                <p> Price: {product.price}</p>
-                <p> Quanitity: {product.quantity}</p>
+                <p>
+                  Price:  ${product.price?.toLocaleString("en-US")}
+                </p>
+                <p> {product.description}</p>
+                <Button> In-Stock</Button>
                 <p> Item Arrival: {new Date(product.createdAt).toLocaleDateString()}</p>
               </div>
             </div>

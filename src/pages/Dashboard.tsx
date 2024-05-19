@@ -10,7 +10,7 @@ const DashboardPage: React.FC = () => {
   const [productName, setProductName] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState(0)
-  const [productId, setProductId] = useState("")
+  const [productID, setProductID] = useState("")
 
   // const handleAddProduct = async () => {
   //   await addProduct({ productName, description, price })
@@ -56,8 +56,8 @@ const DashboardPage: React.FC = () => {
           />
           <TextField
             label="Product ID (for update/delete)"
-            value={productId}
-            onChange={(e) => setProductId(e.target.value)}
+            value={productID}
+            onChange={(e) => setProductID(e.target.value)}
           />
           <Button variant="contained">Add Product</Button>
           <Button variant="contained">

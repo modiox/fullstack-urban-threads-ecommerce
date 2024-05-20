@@ -20,6 +20,7 @@ import {
 import { SelectChangeEvent } from "@mui/material/Select"
 import "@/util/App.css"
 
+
 const Products = () => {
   const { products, isLoading, error, totalPages } = useSelector(
     (state: RootState) => state.productR
@@ -29,8 +30,8 @@ const Products = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(3)
   const [keyword, setSearchKeyword] = useState("")
-  const [sortBy, setSortBy] = useState("Name")
-
+  const [sortBy, setSortBy] = useState("keyword")
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +39,8 @@ const Products = () => {
     }
     fetchData()
   }, [dispatch, pageNumber, pageSize, keyword, sortBy])
+
+  
 
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1)
@@ -66,7 +69,7 @@ const Products = () => {
           minHeight: "80vh"
         }}
       >
-        <div style={{ width: "100%", maxWidth: "1200px", padding: "20px" }}>
+        <div style={{ width: "100%", maxWidth: "1200px", padding: "20px", marginTop: "100px" }}>
           <FormControl sx={{ marginBottom: 2, width: "100%" }}>
             <TextField
               label="Search Products"
@@ -98,14 +101,14 @@ const Products = () => {
               onChange={handleSortChange}
               fullWidth
             >
-              <MenuItem value="Name">Name</MenuItem>
-              <MenuItem value="Price">Price</MenuItem>
-              <MenuItem value="Ascending">Ascending</MenuItem>
-              <MenuItem value="Descending">Descending</MenuItem>
+              <MenuItem value="10">Name</MenuItem>
+              <MenuItem value="20">Price</MenuItem>
+              <MenuItem value="30">Ascending</MenuItem>
+              <MenuItem value="40">Descending</MenuItem>
             </Select>
           </FormControl>
 
-          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12  }} justifyContent="center">
+          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent="center">
             {products &&
               products.length > 0 &&
               products.map((product: Product) => (
@@ -150,3 +153,4 @@ const Products = () => {
 }
 
 export default Products
+

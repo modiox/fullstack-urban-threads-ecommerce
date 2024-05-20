@@ -1,123 +1,93 @@
-import Footer from "@/components/layout/Footer"
-import Index from "../routes"
-import "./App.css"
-import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import React, { useState } from 'react';
+import Footer from "@/components/layout/Footer";
+import Index from "../routes";
+import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Storage } from 'aws-amplify'
+import "@aws-amplify/ui-react/styles.css"
 
 
-export const App = () => { 
+
+const App: React.FC = () => {
+  const [fileUrl, setFileUrl] = useState("")
+  const [file, setFile] = useState<File | null>(null)
+  const [fileName, setFileName] = useState("")
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files ? e.target.files[0] : null
+    if (selectedFile) {
+      setFileUrl(URL.createObjectURL(selectedFile))
+      setFile(selectedFile)
+      setFileName(selectedFile.name)
+    }
+  }
+
+  const saveFile = async () => {
+    if (file) {
+      try {
+        await Storage.put(fileName, file)
+        console.log("Successfully saved image")
+        setFileUrl("")
+        setFile(null)
+        setFileName("")
+      } catch (err) {
+        console.log("Error uploading the images", err)
+      }
+    }
+  }
+
   return (
-   
     <div>
-      <Index/>
-      <ToastContainer/>
-      <Footer/>
+      <Index />
+      <ToastContainer />
+      <Footer />
+      <input type="file" onChange={handleChange} />
+      {fileUrl && <img src={fileUrl} alt="Preview" />}
+      <button onClick={saveFile}>Save file</button>
     </div>
-    
   )
 }
-  
 
 export default App
 
-// <Card>
-//   <CardHeader>
-//     <CardTitle>Product Name</CardTitle>
-//   </CardHeader>
-//   <CardContent>
-//     <CardDescription>Description of the product...</CardDescription>
-//     <p>Price: $X.XX</p>
-//     {/* Additional product details */}
-//   </CardContent>
-//   <CardFooter>
-//     {/* Add to cart button or other actions */}
-//   </CardFooter>
-// </Card>
 
-// // Queries
-// const { data, error } = useQuery<Product[]>({
-//   queryKey: ["products"],
-//   queryFn: getProducts
-// })
 
-{
-  /* <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
-        {data?.map((product) => (
-          <Card key={product.id} className="w-[350px]">
-            <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Some Description here</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content Here</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Add to cart</Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </section>
-      {error && <p className="text-red-500">{error.message}</p>} */
-}
 
-//       // function App() {
+//imageList.tsx
 
-// interface Product {
-//   id: number
-//   name: string
-//   price: number
-//   // Add other properties as needed
-// }
-//   const [products, setProducts] = useState<Product[]>([])
-//   const getProducts = async () => {
-//     try {
-//       console.log("Running Hello??.. :)")
-//       const res = await api.get("/products")
-//       setProducts(res.data) // Set the products in state
-//       return res.data
-//     } catch (error) {
-//       console.error(error)
-//       return Promise.reject(new Error("Something went wrong"))
-//     }
-//   }
+// import React, { useEffect, useState } from "react"
+// import { Storage } from "aws-amplify"
+
+// const ImageList: React.FC = () => {
+//   const [images, setImages] = useState<string[]>([])
+
 //   useEffect(() => {
-//     getProducts()
+//     const fetchImages = async () => {
+//       try {
+//         const imageKeys = await Storage.list("")
+//         const imageUrls = await Promise.all(
+//           imageKeys.map(async (key: { key: string }) => {
+//             const signedUrl = await Storage.get(key.key)
+//             return signedUrl as string
+//           })
+//         )
+//         setImages(imageUrls)
+//       } catch (err) {
+//         console.error("Error fetching images:", err)
+//       }
+//     }
+
+//     fetchImages()
 //   }, [])
 
 //   return (
-//     <div className="app">
-//       <h1 className="text-2xl uppercase mb-10"> Products</h1>
-//       <h1> Welcome to E-Commerce App </h1>
-//       <ul>
-//         {products &&
-//           products.map((product) => (
-//             <li key={product.id}>
-//               {product.name} - {product.price}
-//             </li>
-//           ))}
-//       </ul>
+//     <div>
+//       {images.map((image, index) => (
+//         <img key={index} src={image} alt={`image-${index}`} />
+//       ))}
 //     </div>
 //   )
 // }
-// <div className="app">
-    //   <h1 className="text-2xl uppercase mb-10">Products</h1>
 
-    //   {loading ? (
-    //     <p className="text-3xl mb-10">Printing the products should go here ...</p>
-    //   ) : error ? (
-    //     <p>{error}</p>
-    //   ) : (
-    //     <ul>
-    //       {products &&
-    //         products.map((product) => (
-    //           <li key={product.id}>
-    //             {product.name} - {product.price}
-    //           </li>
-    //         ))}
-    //       <Button variant="default" size="default" onClick={() => console.log("Button clicked")}>
-    //         Click me
-    //       </Button>
-    //     </ul>
-    //   )}
-
-    // </div>
+// export default ImageList

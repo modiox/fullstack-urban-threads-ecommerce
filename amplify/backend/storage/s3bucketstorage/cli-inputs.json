@@ -1,0 +1,13 @@
+{
+  "resourceName": "s3bucketstorage",
+  "policyUUID": "29e6d4e2",
+  "bucketName": "frontendimages",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

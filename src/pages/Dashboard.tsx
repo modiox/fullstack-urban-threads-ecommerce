@@ -30,7 +30,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Box sx={{ padding: "90px", alignContent: "center" }}>
+      <Box sx={{ padding: "100px", alignContent: "center" }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Admin Dashboard
         </Typography>

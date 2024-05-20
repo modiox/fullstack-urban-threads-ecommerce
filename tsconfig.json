@@ -20,6 +20,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "src/util/main.tsx"],
+  "include": ["src", "src/util/main.tsx", "awsConfig.ts", "imageGallary.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

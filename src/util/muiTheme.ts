@@ -14,7 +14,7 @@ const muiTheme = createTheme({
   }, //font
   typography: {
     fontFamily: "Raleway, Arial",
-    fontSize: 14.5
+    fontSize: 12.5
   },
   components: {
     MuiTextField: {

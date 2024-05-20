@@ -110,7 +110,7 @@ const Navbar = () => {
     <ThemeProvider theme={muiTheme}>
       <AppBar position="fixed">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <img src={"Logo.png"} alt="Logo" style={{ height: "50px", marginRight: "20px" }} />
+          <img src={"Logo.png"} alt="Logo" style={{ height: "100px", width: "100px", marginRight: "20px" }} />
           <div style={{ display: "flex", alignItems: "center" }}>
             <ul
               style={{

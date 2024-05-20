@@ -23,7 +23,8 @@ export const Home = () => {
           >
             <div>
               <TitlePage title="Home" />
-              <h2> URBAN THREADS</h2>
+              <img src={"Logo.png"} alt="Logo" style={{ height: "500px", marginRight: "20px" }} />
+              <h3> URBAN THREADS</h3>
               <Link to={"/products"}>
                 <Button> SHOP NOW</Button>
               </Link>

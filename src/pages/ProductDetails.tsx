@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Button, ThemeProvider } from "@mui/material"
+import { Button, CardContent, ThemeProvider } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductsById } from '@/services/toolkit/slices/productSlice'
@@ -41,13 +41,26 @@ const ProductDetails = () => {
               <div className="product-body">
                 <h3> {product.productName}</h3>
                 {/* <p> {product.image}</p> */}
-                <p>
-                  Price:  ${product.price?.toLocaleString("en-US")}
-                </p>
+                <p>Price: ${product.price?.toLocaleString("en-US")}</p>
                 <p> {product.description}</p>
                 <Button> In-Stock</Button>
                 <p> Item Arrival: {new Date(product.createdAt).toLocaleDateString()}</p>
               </div>
+              <CardContent>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px" }}
+                  size="small"
+                >
+                  Add To Cart
+                </Button>
+                <Link to={`/cart`} style={{ textDecoration: "none" }}>
+                  <Button variant="contained" color="secondary" size="small">
+                    Buy Now
+                  </Button>
+                </Link>
+              </CardContent>
             </div>
           )}
         </article>

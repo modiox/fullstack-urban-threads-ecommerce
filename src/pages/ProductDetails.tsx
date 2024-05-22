@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, CardContent, ThemeProvider } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
 import { Link, useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductsById } from '@/services/toolkit/slices/productSlice'
+import { Storage } from "aws-amplify"
+import { Product } from '@/types'
+
+
+
 
 const ProductDetails = () => {
 
@@ -19,8 +24,10 @@ const ProductDetails = () => {
        fetchData()
      }, [])
 
+
     const {productID} = useParams<{productID: string}>()
     console.log(productID) 
+    
   return (
     <ThemeProvider theme={muiTheme}>
       <div
@@ -37,10 +44,10 @@ const ProductDetails = () => {
           {error && <p> Error..{error} </p>}
           {product && (
             <div>
-              <img src={product.image} alt={product.productName}></img>
+             
               <div className="product-body">
                 <h3> {product.productName}</h3>
-                {/* <p> {product.image}</p> */}
+              
                 <p>Price: ${product.price?.toLocaleString("en-US")}</p>
                 <p> {product.description}</p>
                 <Button> In-Stock</Button>

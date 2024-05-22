@@ -2,8 +2,9 @@ import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 // import { addProduct, updateProduct, deleteProduct } from "@/services/api/productService"
 import { Box, TextField, Button, Typography } from "@mui/material"
-import { ThemeProvider } from "react-admin"
+import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
+import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar"
 
 const DashboardPage: React.FC = () => {
   const dispatch = useDispatch()
@@ -12,28 +13,13 @@ const DashboardPage: React.FC = () => {
   const [price, setPrice] = useState(0)
   const [productID, setProductID] = useState("")
 
-  // const handleAddProduct = async () => {
-  //   await addProduct({ productName, description, price })
-  //   // dispatch fetch products action to refresh the list
-  // }
-
-  // const handleUpdateProduct = async () => {
-  //   await updateProduct(productId, { productName, description, price })
-  //   // dispatch fetch products action to refresh the list
-  // }
-
-  // const handleDeleteProduct = async () => {
-  //   await deleteProduct(productId)
-  //   // dispatch fetch products action to refresh the list
-  // } will figure out how to use properly later 
-
-
   return (
     <ThemeProvider theme={muiTheme}>
       <Box sx={{ padding: "100px", alignContent: "center" }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Admin Dashboard
+          Welcome to your dashboard, Admin! 
         </Typography>
+        <AdminSidebar/>
         <Box
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: "23px", maxWidth: "400px" }}

@@ -35,3 +35,19 @@
 //  }
 
 // export default Categories
+
+import { AdminSidebar } from '../../components/layout/sidebar/AdminSidebar'
+import React from 'react'
+
+const Categories = () => {
+  return (
+    <div>Categories
+        <div> 
+            <AdminSidebar/>
+            Categories management goes here 
+        </div>
+    </div>
+  )
+}
+
+export default Categories

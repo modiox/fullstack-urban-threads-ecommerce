@@ -34,6 +34,7 @@ function Copyright(props: any) {
 }
 
 export function LoginUser() {
+  
   const dispatch: AppDispatch = useDispatch()
   //after registration navigate to Login page
   const navigate = useNavigate()
@@ -49,9 +50,9 @@ export function LoginUser() {
 
     try {
       const response = await dispatch(loginUser(data))
-      console.log("Response from register" + response.payload)
-      toast.success("Welcome")
-      // navigate("/") with user logged in
+      console.log("Response from Login" + response.payload.data.user)
+      const isAdmin = response.payload.data.loggedInUser.isAdmin
+      navigate(isAdmin? "/dashboard/admin" : "/dashboard/user") 
     } catch (error: any) {
       console.error("Error:", error)
       if (error && error.message) {

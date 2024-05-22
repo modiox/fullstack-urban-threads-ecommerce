@@ -4,7 +4,7 @@ import muiTheme from "@/util/muiTheme"
 import { ThemeProvider } from "@emotion/react"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
-import { fetchProducts } from "@/services/toolkit/slices/productSlice"
+import { fetchProducts, searchProducts } from "@/services/toolkit/slices/productSlice"
 import { Product } from "@/types"
 import {
   Button,
@@ -20,7 +20,6 @@ import {
 import { SelectChangeEvent } from "@mui/material/Select"
 import "@/util/App.css"
 
-
 const Products = () => {
   const { products, isLoading, error, totalPages } = useSelector(
     (state: RootState) => state.productR
@@ -31,16 +30,17 @@ const Products = () => {
   const [pageSize, setPageSize] = useState(3)
   const [keyword, setSearchKeyword] = useState("")
   const [sortBy, setSortBy] = useState("keyword")
- 
+  const [isAscending, setAscending] = useState("")
 
+  // Fetch all products on initial load
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
-    }
-    fetchData()
+    dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
   }, [dispatch, pageNumber, pageSize, keyword, sortBy])
 
-  
+  const handleSearchAndFilter = async () => {
+    await dispatch(searchProducts({ pageNumber, pageSize, keyword, isAscending, sortBy }))
+    await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
+  }
 
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1)
@@ -51,11 +51,20 @@ const Products = () => {
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault
     setSearchKeyword(e.target.value)
   }
 
   const handleSortChange = (e: SelectChangeEvent<string>) => {
     setSortBy(e.target.value)
+  
+    if (e.target.value === "20") {
+      setAscending("true")
+    } else if (e.target.value === "30") {
+      setAscending("false")
+    } else {
+      setAscending("") // Default to empty string if not provided
+    }
   }
 
   return (
@@ -91,7 +100,7 @@ const Products = () => {
             </Typography>
           )}
 
-          <FormControl sx={{ marginBottom: 2, width: "100%" }}>
+          <FormControl sx={{ marginBottom: 2, width: "20%", alignItems: "left"}}>
             <InputLabel id="sort-by-label">Filter</InputLabel>
             <Select
               labelId="sort-by-label"
@@ -101,12 +110,12 @@ const Products = () => {
               onChange={handleSortChange}
               fullWidth
             >
-              <MenuItem value="10">Name</MenuItem>
-              <MenuItem value="20">Price</MenuItem>
-              <MenuItem value="30">Ascending</MenuItem>
-              <MenuItem value="40">Descending</MenuItem>
+              {/* <MenuItem value="10">Price</MenuItem> */}
+              <MenuItem value="20">Ascending</MenuItem>
+              <MenuItem value="30">Descending</MenuItem>
             </Select>
           </FormControl>
+          <Button onClick={handleSearchAndFilter}>Search</Button>
 
           <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }} justifyContent="center">
             {products &&
@@ -153,4 +162,3 @@ const Products = () => {
 }
 
 export default Products
-

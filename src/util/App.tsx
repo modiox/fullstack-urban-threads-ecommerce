@@ -6,7 +6,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Storage } from 'aws-amplify'
 import "@aws-amplify/ui-react/styles.css"
+import awsConfig from "./awsConfig" 
 
+
+// Storage.configure({
+//   AWSS3: {
+//     bucket: "myimagesfrontend", // bucket name
+//     region: "eu-north-1" // bucket region
+//   }
+// })
 
 
 const App: React.FC = () => {
@@ -39,6 +47,7 @@ const App: React.FC = () => {
 
   return (
     <div>
+
       <Index />
       <ToastContainer />
       <Footer />

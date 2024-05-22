@@ -17,6 +17,10 @@ import { useTheme, useMediaQuery } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
 import MenuIcon from "@mui/icons-material/Menu"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "@/services/toolkit/store"
+import { logoutUser } from "@/services/toolkit/slices/userSlice"
+import { UserState } from "@/types"
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -29,6 +33,13 @@ const Navbar = () => {
   const handleMenuClose = () => {
     setAnchorEl(null)
   }
+
+  const {isLoggedIn} = useSelector((state:RootState)=> state.userR) 
+
+  const dispatch:AppDispatch = useDispatch()
+  const handleLogout = () => { 
+    dispatch(logoutUser()) }
+
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -57,7 +68,7 @@ const Navbar = () => {
           to="/"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <ListItemText primary="Home"/>
+          <ListItemText primary="Home" />
         </ListItem>
         <ListItem
           button
@@ -73,23 +84,16 @@ const Navbar = () => {
           to="/dashboard"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-        <ListItemText primary="Dashboard" />
+          <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem
-          button
-          component={Link}
-          to="/register"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-        <ListItemText primary="Register" />
-        </ListItem>
+
         <ListItem
           button
           component={Link}
           to="/login"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-        <ListItemText primary="Login" />
+          <ListItemText primary="Login" />
         </ListItem>
         <ListItem
           button
@@ -99,6 +103,32 @@ const Navbar = () => {
         >
           <ListItemText primary="Contact" />
         </ListItem>
+
+        {isLoggedIn && (
+          <>
+            <ListItem style={navItemStyle}>
+              <Link
+                to="/"
+                style={{ textDecoration: "none", color: "inherit" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Link>
+            </ListItem>
+          </>
+        )}
+        {!isLoggedIn && (
+          <>
+            <ListItem
+              button
+              component={Link}
+              to="/register"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <ListItemText primary="Register" />
+            </ListItem>
+          </>
+        )}
       </List>
     </div>
   )
@@ -110,7 +140,11 @@ const Navbar = () => {
     <ThemeProvider theme={muiTheme}>
       <AppBar position="fixed">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <img src={"Logo.png"} alt="Logo" style={{ height: "100px", width: "100px", marginRight: "20px" }} />
+          <img
+            src={"Logo.png"}
+            alt="Logo"
+            style={{ height: "100px", width: "100px", marginRight: "20px" }}
+          />
           <div style={{ display: "flex", alignItems: "center" }}>
             <ul
               style={{
@@ -183,6 +217,34 @@ const Navbar = () => {
                     <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
                       Login
                     </Link>
+                  </li>
+                  <li>
+
+                 
+        {isLoggedIn && (
+          <>
+            <li style={navItemStyle}>
+              <Link
+                to="/"
+                style={{ textDecoration: "none", color: "inherit" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Link>
+            </li>
+          </>
+        )}
+        {!isLoggedIn && (
+          <>
+            <ListItem
+              button
+              component={Link}
+              to="/"
+              style={{ textDecoration: "none", color: "inherit" }}
+            > 
+            </ListItem>
+          </>
+        )}
                   </li>
                   <li style={navItemStyle}>
                     <Link to="/contact" style={{ textDecoration: "none", color: "inherit" }}>

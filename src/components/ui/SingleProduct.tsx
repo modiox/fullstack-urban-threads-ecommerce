@@ -2,14 +2,32 @@ import { Product } from "@/types"
 import { Link } from "react-router-dom";
 import muiTheme from "@/util/muiTheme";
 import { ThemeProvider } from "@emotion/react";
-import { Button, Card, CardMedia, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { CardContent } from "./card";
+import { Storage } from "aws-amplify";
 
 
 const SingleProduct = (props: { product:Product  }) => {
   const {product} = props; 
   const [showFullDescription, setShowFullDescription] = useState(false)
+    const [imageUrls, setImageUrls] = useState<string[]>([])
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      try {
+        if (product.image && product.image.length > 0) {
+           const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
+          setImageUrls(urls)
+        }
+      } catch (error) {
+        console.error("Error fetching image from S3:", error)
+      }
+    }
+
+    fetchImageUrl()
+  }, [product.image])
+
   
 
    const toggleDescription = () => {
@@ -45,12 +63,18 @@ const SingleProduct = (props: { product:Product  }) => {
   return (
     <ThemeProvider theme={muiTheme}>
       <Card sx={{ maxWidth: 345, m: 2 }}>
-        <CardMedia
-          component="img"
-          height="150"
-          image={product.image} // Placeholder for images
-          alt={product.productName}
-        />
+        <Box>
+          {imageUrls.map((url, index) => (
+            <CardMedia
+              key={index}
+              component="img"
+              height="150"
+              image={url} // Use the fetched S3 image URL
+              alt={`${product.productName} image ${index + 1}`}
+              sx={{ mb: 1 }} //
+            />
+          ))}
+        </Box>
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
             {product.productName}
@@ -64,7 +88,8 @@ const SingleProduct = (props: { product:Product  }) => {
             variant="contained"
             color="secondary"
             sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px" }}
-            size="small" >
+            size="small"
+          >
             Add To Cart
           </Button>
           <Link to={`/products/${product.productID}`} style={{ textDecoration: "none" }}>

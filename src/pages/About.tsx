@@ -3,6 +3,7 @@ import muiTheme from "@/util/muiTheme";
 import { ThemeProvider } from "@emotion/react"
 
 
+
 export const About = () => {
   return (
     <ThemeProvider theme={muiTheme}>

@@ -7,8 +7,8 @@ import muiTheme from "@/util/muiTheme"
 import { UserSidebar } from "@/components/layout/sidebar/UserSidebar"
 import { AppDispatch } from "@/services/toolkit/store"
 
-const UserDashboard: React.FC = () => {
-  const dispatch = useDispatch()
+ const UserDashboard: React.FC = () => {
+  const dispatch:AppDispatch = useDispatch()
   
 
   return (

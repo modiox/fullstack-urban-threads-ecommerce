@@ -1,10 +1,16 @@
 import api from "@/api"
 import {  LoginFormData, UpdateUserProfile, User, UserState } from "@/types"
+import { getLocalStorage, getToken, setLocalStorage } from "@/util/localStorage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
  
 
 
-const data = localStorage.getItem("loginData") != null ? JSON.parse(String(localStorage.getItem("loginData"))) : []
+const data = getLocalStorage("loginData", {
+  userData: null,
+  token: null,
+  isLoggedIn: false
+})
+//localStorage.getItem("loginData") != null ? JSON.parse(String(localStorage.getItem("loginData"))) : []
 
 //type definition of the initialState
 
@@ -38,7 +44,9 @@ export const updateUser = createAsyncThunk(
     if (!userId) {
       throw new Error("User ID is undefined"); 
     }
-    const response = await api.put(`/account/my-profile/update/${userId}`, updateUserData);
+    const token = getToken();
+    const response = await api.put(`/account/my-profile/update/${userId}`, updateUserData, 
+    {headers: { Authorization: `Bearer ${token}`}}); //passing the token 
     console.log(response.data.message);
     return response.data;
   }
@@ -52,14 +60,10 @@ const userSlice = createSlice({
       state.isLoggedIn = false
       state.userData = null
       state.token = null
-      localStorage.setItem(
-        "loginData",
-        JSON.stringify({
-          isLoggedIn: state.isLoggedIn,
-          userData: state.userData,
-          token: state.token
-        })
-      )
+      setLocalStorage("loginData", {isLoggedIn: state.isLoggedIn,
+      userData: state.userData,
+      token: state.token })
+
     }
   },
   extraReducers(builder) {
@@ -67,14 +71,20 @@ const userSlice = createSlice({
       state.isLoggedIn = true
       state.userData = action.payload.data.loggedInUser
       state.token = action.payload.data.token
-      localStorage.setItem(
-        "loginData",
-        JSON.stringify({
-          isLoggedIn: state.isLoggedIn,
+      setLocalStorage("loginData", {isLoggedIn: state.isLoggedIn,
+        userData: state.userData,
+        token: state.token })
+    })
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      console.log(action.payload)
+      if (state.userData) {
+        state.userData.firstName = action.payload.data.firstName
+        state.userData.lastName = action.payload.data.lastName 
+        state.userData.address = action.payload.data.address
+        setLocalStorage("loginData", {isLoggedIn: state.isLoggedIn,
           userData: state.userData,
-          token: state.token
-        })
-      )
+          token: state.token })
+      }
     })
     builder.addMatcher(
       (action) => action.type.endsWith("/pending"),

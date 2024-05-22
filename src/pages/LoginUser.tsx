@@ -57,7 +57,7 @@ export function LoginUser() {
     } catch (error: any) {
       console.error("Error:", error)
       if (error && error.message) {
-        toast.error(error.message)
+        toast.error("Login failed. Please check credintials..")
       } else {
         toast.error("Login Failed. Please check email and password")
       }

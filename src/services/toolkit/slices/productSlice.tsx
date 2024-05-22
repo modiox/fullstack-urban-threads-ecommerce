@@ -136,7 +136,7 @@ const productSlice = createSlice({
     builder.addCase(searchProducts.fulfilled, (state, action) => {
       console.log(action.payload)
       state.products = action.payload
-      // state.totalPages = action.payload.data.totalPages
+      state.totalPages = action.payload.totalPages
       state.error = null
       state.isLoading = false
     })

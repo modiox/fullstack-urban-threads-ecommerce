@@ -1,34 +1,38 @@
-import TitlePage from "@/components/ui/TitlePage"
-import React from "react"
-import  muiTheme from "@/util/muiTheme"
-import { ThemeProvider, Typography } from "@mui/material"
+import React from "react";
+import muiTheme from "@/util/muiTheme";
+import { ThemeProvider, Typography, Box } from "@mui/material";
+import TitlePage from "@/components/ui/TitlePage";
 
-export const Contact = () => {
+const Contact = () => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <TitlePage title="Contact" />
-      <div
-        style={{
-          display: "grid",
-          justifyContent: "center",
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          height: "70vh"
+          justifyContent: "center",
+          minHeight: "70vh",
+          padding: "0 20px",
         }}
-        className="contact-container">
+        className="contact-container"
+      >
         <TitlePage title="Contact" />
-        <h2 className="contact-title">Contact Us</h2>
-        <p className="contact-text">
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Contact Us
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}>
           If you have any questions or feedback, feel free to reach out to us using the information
           provided below:
-        </p>
-        <ul className="contact-info">
-          <li>Email: info@ecommerce.com</li>
+        </Typography>
+        <ul className="contact-info" style={{ listStyleType: "none", paddingLeft: 0 }}>
+          <li>Email: info@urbanthreads.com</li>
           <li>Phone: 123-456-7890</li>
           <li>Address: 123 st, City, Country</li>
         </ul>
-      </div>
+      </Box>
     </ThemeProvider>
-  )
-}
-export default Contact
+  );
+};
 
+export default Contact;

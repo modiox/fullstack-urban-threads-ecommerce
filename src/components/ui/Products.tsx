@@ -110,7 +110,7 @@ const Products = () => {
               onChange={handleSortChange}
               fullWidth
             >
-              {/* <MenuItem value="10">Price</MenuItem> */}
+              {/* Filtering products by price */}
               <MenuItem value="20">Price Low to High</MenuItem>
               <MenuItem value="30">Price High to Low</MenuItem>
             </Select>

@@ -35,14 +35,6 @@ const Index = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<LoginUser />} />
         <Route path="/products/:productID" element={<ProductDetails />} />
-
-        {/* user routes */}
-        {/* Protected Route with a common path */}
-        <Route path="/dashboard"element={<ProtectedRoute/>} >
-           <Route path="user" element={<UserDashboard/>} />
-           <Route path="user/profile" element={<UserProfile />} />
-           <Route path="user/orders" element={<UserOrder />} />
-        </Route>
     
 
         {/* admin routes */}
@@ -54,6 +46,14 @@ const Index = () => {
            <Route path="admin/users" element={<UsersManagement />} />
            <Route path="admin/categories" element={<CategoriesManagement />} />
          </Route>
+
+          {/* user routes */}
+        {/* Protected Route with a common path */}
+        <Route path="/dashboard"element={<ProtectedRoute/>} >
+           <Route path="user" element={<UserDashboard/>} />
+           <Route path="user/profile" element={<UserProfile />} />
+           <Route path="user/orders" element={<UserOrder />} />
+        </Route>
        
 
         <Route path="/register" element={<Register />} />

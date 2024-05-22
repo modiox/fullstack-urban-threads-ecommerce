@@ -5,9 +5,10 @@ import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar"
 import TitlePage from "@/components/ui/TitlePage"
+import { AppDispatch } from "@/services/toolkit/store"
 
 const AdminDashboard: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch:AppDispatch = useDispatch()
   const [productName, setProductName] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState(0)

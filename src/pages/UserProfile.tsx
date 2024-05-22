@@ -1,6 +1,5 @@
-import { UserSidebar } from "@/components/layout/sidebar/UserSidebar"
-import React, { useState } from "react"
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import React, { useState } from "react";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Avatar,
   Button,
@@ -13,52 +12,50 @@ import {
   Box,
   Typography,
   Container,
-  ThemeProvider
-} from "@mui/material"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import muiTheme from "@/util/muiTheme"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+  ThemeProvider,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useDispatch } from "react-redux";
+import { updateUser } from "@/services/toolkit/slices/userSlice";
+import useUserState from "@/hooks/useUserState";
+import { AppDispatch } from "@/services/toolkit/store";
+import muiTheme from "@/util/muiTheme";
+import { UserSidebar } from "@/components/layout/sidebar/UserSidebar";
 
-// Define the form data interface
 interface UpdateUserProfile {
-  firstName: string
-  lastName: string
-  email: string
-  address: string
-  allowExtraEmails: boolean
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  allowExtraEmails: boolean;
 }
 
 const UserProfile: React.FC = () => {
-  const { userData } = useUserState()
+  const { userData } = useUserState();
   const dispatch: AppDispatch = useDispatch();
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors }
-  } = useForm<UpdateUserProfile>()
+    formState: { errors },
+  } = useForm<UpdateUserProfile>();
 
   const onSubmit: SubmitHandler<UpdateUserProfile> = async (data) => {
-    try { 
-      const res = dispatch(updateUser({updateUserData: data, userId: userData?.userId}))
-      console.log(res)
+    try {
+      const res = await dispatch(updateUser({ updateUserData: data, userId: userData?.userId }));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
-    catch(error) {
-      console.log(error)
-    }
-   
-   
-  }
+  };
 
   const Copyright = (props: any) => (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/"></Link>
-      {new Date().getFullYear()}
+      <Link color="inherit" href="https://mui.com/"></Link> {new Date().getFullYear()}
     </Typography>
-  )
+  );
 
   return (
     <div>
@@ -69,9 +66,11 @@ const UserProfile: React.FC = () => {
         </Avatar>
         {userData && (
           <>
-            <img src={userData.image} alt={userData.name} className="profile-img" />
-            <h3>Name: {userData.name}</h3>
-            <p>Email: {userData.name}</p>
+            {userData.image && (
+              <img src={userData.image} alt={userData.firstName} className="profile-img" />
+            )}
+            <h3>Name: {userData.firstName}</h3>
+            <p>Email: {userData.email}</p>
             <p>Address: {userData.address}</p>
             <Button onClick={() => setIsFormOpen(!isFormOpen)}>
               {isFormOpen ? "Close Edit" : "Edit Info"}
@@ -86,18 +85,13 @@ const UserProfile: React.FC = () => {
                       marginTop: 8,
                       display: "flex",
                       flexDirection: "column",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}
                   >
                     <Typography component="h1" variant="h5">
                       Edit Profile
                     </Typography>
-                    <Box
-                      component="form"
-                      noValidate
-                      onSubmit={handleSubmit(onSubmit)}
-                      sx={{ mt: 3 }}
-                    >
+                    <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
                       <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                           <Controller
@@ -145,8 +139,8 @@ const UserProfile: React.FC = () => {
                               required: "Email is required",
                               pattern: {
                                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                                message: "Enter a valid email address"
-                              }
+                                message: "Enter a valid email address",
+                              },
                             }}
                             render={({ field }) => (
                               <TextField
@@ -197,7 +191,7 @@ const UserProfile: React.FC = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserProfile
+export default UserProfile;

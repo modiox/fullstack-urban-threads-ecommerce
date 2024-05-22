@@ -30,6 +30,7 @@ export type ProductState = {
   isLoading: boolean
 }
 
+
 export type User = {
   userId?: string
   firstName: string
@@ -42,15 +43,17 @@ export type User = {
   isAdmin?: boolean
   isBanned?: boolean
   createdAt?: string
+  
 }
 export type UserState = {
   user: User | null
   totalPages: number
   error: null | string
   isLoading: boolean
-  // userData: string | null
+  userData: User | null
   isLoggedIn: boolean 
   token: null | string
+
   
 }
 export type LoginFormData = {
@@ -61,7 +64,7 @@ export type LoginFormData = {
 
 export type LoginData = {
   isLoggedIn: boolean
-  userData: User | null // Adjust 'any' to the appropriate type if possible
+  userData: User | null 
   token: string | null
 }
 export type RegisterFormData = { 
@@ -77,6 +80,7 @@ export type RegisterFormData = {
 
 //user info update form 
 export type UpdateUserProfile = { 
-  name: string 
+  firstName: string 
+  lastName: string
   address: string 
 }

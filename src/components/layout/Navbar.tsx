@@ -20,7 +20,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
 import { logoutUser } from "@/services/toolkit/slices/userSlice"
-import { UserState } from "@/types"
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

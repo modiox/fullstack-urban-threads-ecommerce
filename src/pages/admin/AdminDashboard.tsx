@@ -1,12 +1,11 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-// import { addProduct, updateProduct, deleteProduct } from "@/services/api/productService"
 import { Box, TextField, Button, Typography } from "@mui/material"
 import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar"
 
-const DashboardPage: React.FC = () => {
+const AdminDashboardPage: React.FC = () => {
   const dispatch = useDispatch()
   const [productName, setProductName] = useState("")
   const [description, setDescription] = useState("")
@@ -58,4 +57,4 @@ const DashboardPage: React.FC = () => {
   )
 }
 
-export default DashboardPage
+export default AdminDashboardPage

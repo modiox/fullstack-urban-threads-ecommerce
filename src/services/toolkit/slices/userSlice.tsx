@@ -1,21 +1,23 @@
 import api from "@/api"
-import {  LoginFormData, User, UserState } from "@/types"
+import {  LoginFormData, UpdateUserProfile, User, UserState } from "@/types"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+ 
 
 
 const data = localStorage.getItem("loginData") != null ? JSON.parse(String(localStorage.getItem("loginData"))) : []
 
 //type definition of the initialState
 
+
 const initialState: UserState = {
   error: null,
   isLoading: false,
-  userData: data.userData,
-  token: data.token,
-  isLoggedIn: data.token,
+  userData: data.userData || null,
+  token: data.token || null,
+  isLoggedIn: !!data.token,
   user: null,
-  totalPages: 0
-}
+  totalPages: 0,
+};
 export const registerUser = createAsyncThunk(
   "userSlice/registerUser",
   async (newUser: User) => {
@@ -32,12 +34,15 @@ export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData
 //update user info
 export const updateUser = createAsyncThunk(
   "userSlice/updateUser",
-  async ({ updateUserData, userId }: { updateUserData: UpdateUserProfile, userId: string }) => {
-    const response = await api.put("/account/my-profile/update", updateUserData)
-    console.log(response.data.message)
-    return response.data
+  async ({ updateUserData, userId }: { updateUserData: UpdateUserProfile, userId: string | undefined }) => {
+    if (!userId) {
+      throw new Error("User ID is undefined"); 
+    }
+    const response = await api.put(`/account/my-profile/update/${userId}`, updateUserData);
+    console.log(response.data.message);
+    return response.data;
   }
-)
+);
 //cases: pending, fulfilling, rejected
 const userSlice = createSlice({
   name: "users",

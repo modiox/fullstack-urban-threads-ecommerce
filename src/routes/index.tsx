@@ -5,22 +5,16 @@ import Home from "../pages/Home"
 import About from "../pages/About"
 import Contact from "../pages/Contact"
 import Error from "../pages/Error"
-import ProductList from "../components/ui/Products"
 import Navbar from "@/components/layout/Navbar"
 // import Category from "../components/ui/Category"
 import ProductDetails from "@/pages/ProductDetails"
 import Products from "../components/ui/Products"
-import Dashboard from "@/pages/UserDashboard"
 import Register from "@/pages/Register"
-import { Login } from "react-admin"
 import { LoginUser } from "@/pages/LoginUser"
 import UserDashboard from "@/pages/UserDashboard"
 import AdminDashboard from "@/pages/admin/AdminDashboard"
 import UserProfile from "@/pages/UserProfile"
 import UserOrder from "@/pages/UserOrder"
-import { Users } from "lucide-react"
-import Orders from "@/pages/admin/OrdersManagement"
-import Categories from "@/pages/admin/CategoriesManagement"
 import ProductsMangement from "@/pages/admin/ProductsMangement"
 import OrdersManagement from "@/pages/admin/OrdersManagement"
 import UsersManagement from "@/pages/admin/UsersManagement"
@@ -51,8 +45,6 @@ const Index = () => {
         
         </Route>
     
-
-       
 
         {/* admin routes */}
         {/* Protected route with common path */}

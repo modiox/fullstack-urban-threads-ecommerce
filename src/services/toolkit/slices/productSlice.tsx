@@ -1,6 +1,7 @@
 import api from "@/api";
 import { ProductState } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 //type definition of the initialState
 
@@ -148,10 +149,10 @@ const productSlice = createSlice({
  
 
 })
-export const selectProducts = (state) => state.products.products
-export const selectTotalPages = (state) => state.products.totalPages
-export const selectIsLoading = (state) => state.products.isLoading
-export const selectError = (state) => state.products.error
+export const selectProducts = (state:RootState) => state.productR.products
+export const selectTotalPages = (state:RootState) => state.productR.totalPages
+export const selectIsLoading = (state:RootState) => state.productR.isLoading
+export const selectError = (state:RootState) => state.productR.error
 
 export default productSlice.reducer
 

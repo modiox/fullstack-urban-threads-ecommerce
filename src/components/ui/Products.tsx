@@ -111,8 +111,8 @@ const Products = () => {
               fullWidth
             >
               {/* <MenuItem value="10">Price</MenuItem> */}
-              <MenuItem value="20">Ascending</MenuItem>
-              <MenuItem value="30">Descending</MenuItem>
+              <MenuItem value="20">Price Low to High</MenuItem>
+              <MenuItem value="30">Price High to Low</MenuItem>
             </Select>
           </FormControl>
           <Button onClick={handleSearchAndFilter}>Search</Button>

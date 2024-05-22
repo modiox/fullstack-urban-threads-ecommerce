@@ -7,6 +7,7 @@ import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar"
 import TitlePage from "@/components/ui/TitlePage"
 import { AppDispatch } from "@/services/toolkit/store"
 
+
 const AdminDashboard: React.FC = () => {
   const dispatch:AppDispatch = useDispatch()
   const [productName, setProductName] = useState("")
@@ -17,12 +18,14 @@ const AdminDashboard: React.FC = () => {
   return (
     
     <ThemeProvider theme={muiTheme}>
-          <TitlePage title="Admin Dashboard" />
+      <TitlePage title="Admin Dashboard" /> 
+      
+        
       <Box sx={{ padding: "100px", alignContent: "center" }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Welcome to your dashboard, Admin! 
         </Typography>
-        <AdminSidebar/>
+       <div className="admin-sidebar"> <AdminSidebar/> </div>
         <Box
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: "23px", maxWidth: "400px" }}

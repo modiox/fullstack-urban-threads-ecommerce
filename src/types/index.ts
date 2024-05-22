@@ -13,13 +13,21 @@ export type Product = {
 
 export type Category = { 
   categoryId: string
-  categoryName: string
+  name: string
   description: string
   products: Product[]
   sold: number
   shipping: number
   createdAt: string
 
+}
+
+export type CategoryState = {
+  categories: Category[]
+  totalPages: number 
+  category: Category | null
+  error: null | string
+  isLoading: boolean
 }
 
 export type ProductState = {

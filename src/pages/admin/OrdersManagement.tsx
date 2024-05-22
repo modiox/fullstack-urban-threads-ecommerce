@@ -1,7 +1,7 @@
 import { AdminSidebar } from '@/components/layout/sidebar/AdminSidebar'
 import React from 'react'
 
-const Orders = () => {
+const OrdersManagement = () => {
   return (
     <div>
       Orders
@@ -13,4 +13,4 @@ const Orders = () => {
   )
 }
 
-export default Orders
+export default OrdersManagement

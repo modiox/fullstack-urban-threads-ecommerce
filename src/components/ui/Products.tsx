@@ -21,6 +21,7 @@ import { SelectChangeEvent } from "@mui/material/Select"
 import "@/util/App.css"
 
 const Products = () => {
+  
   const { products, isLoading, error, totalPages } = useSelector(
     (state: RootState) => state.productR
   )

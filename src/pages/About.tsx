@@ -1,12 +1,14 @@
 import React from "react";
 import muiTheme from "@/util/muiTheme";
 import { ThemeProvider } from "@emotion/react"
+import TitlePage from "@/components/ui/TitlePage";
 
 
 
 export const About = () => {
   return (
     <ThemeProvider theme={muiTheme}>
+          <TitlePage title="About Us" />
       <div
         style={{
           display: "flex",

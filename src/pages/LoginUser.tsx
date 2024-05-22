@@ -20,6 +20,7 @@ import { loginUser } from "@/services/toolkit/slices/userSlice"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import { LoginFormData } from "@/types"
+import TitlePage from "@/components/ui/TitlePage"
 
 function Copyright(props: any) {
   return (
@@ -50,7 +51,7 @@ export function LoginUser() {
 
     try {
       const response = await dispatch(loginUser(data))
-      console.log("Response from Login" + response.payload.data.user)
+      console.log("Response from Login" + response.payload.data.loggedInUser)
       const isAdmin = response.payload.data.loggedInUser.isAdmin
       navigate(isAdmin? "/dashboard/admin" : "/dashboard/user") 
     } catch (error: any) {
@@ -65,6 +66,7 @@ export function LoginUser() {
 
   return (
     <ThemeProvider theme={muiTheme}>
+        <TitlePage title="Login" />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

@@ -6,6 +6,7 @@ import muiTheme from "@/util/muiTheme"
 export const Error = () => {
   return (
     <ThemeProvider theme={muiTheme}>
+      <TitlePage title="404 Error" />
       <div style ={{ display: "flex", justifyContent: "center", alignItems: "center", height: "70vh" }}>
         <div className="contact-container">
           <TitlePage title="404 Error" />

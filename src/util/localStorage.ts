@@ -1,5 +1,4 @@
-import { LoginData } from "./types"
-import {User} from "./types"
+import { LoginData } from "@/types"
 
 
 
@@ -16,7 +15,7 @@ export const getLocalStorage = <T>(key: string, defaultValue: T): T => {
 
     export const getToken = (): string | null => { 
         const dataFromLocalStorage = getLocalStorage<LoginData>("loginData", {
-            isLoggedin: false, 
+            isLoggedIn: false, 
             userData: null,
             token: ""
         })

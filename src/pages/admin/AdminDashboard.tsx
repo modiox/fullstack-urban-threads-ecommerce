@@ -4,8 +4,9 @@ import { Box, TextField, Button, Typography } from "@mui/material"
 import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar"
+import TitlePage from "@/components/ui/TitlePage"
 
-const AdminDashboardPage: React.FC = () => {
+const AdminDashboard: React.FC = () => {
   const dispatch = useDispatch()
   const [productName, setProductName] = useState("")
   const [description, setDescription] = useState("")
@@ -13,7 +14,9 @@ const AdminDashboardPage: React.FC = () => {
   const [productID, setProductID] = useState("")
 
   return (
+    
     <ThemeProvider theme={muiTheme}>
+          <TitlePage title="Admin Dashboard" />
       <Box sx={{ padding: "100px", alignContent: "center" }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Welcome to your dashboard, Admin! 
@@ -57,4 +60,4 @@ const AdminDashboardPage: React.FC = () => {
   )
 }
 
-export default AdminDashboardPage
+export default AdminDashboard

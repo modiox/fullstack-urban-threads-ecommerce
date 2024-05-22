@@ -7,8 +7,8 @@ import { RootState } from '@/services/toolkit/store'
 import { useSelector } from 'react-redux'
 
 export const UserSidebar = () => {
-    //const { userData } = useSelector((state: RootState) => state.userR) 
-    const userData = useSelector((state: RootState) => state.userR.userData);
+    const { userData } = useSelector((state: RootState) => state.userR) 
+    //const userData = useSelector((state: RootState) => state.userR.userData);
   return (
     <ThemeProvider theme={muiTheme}>
       <Box sx={{ padding: "100px", alignContent: "center" }}>

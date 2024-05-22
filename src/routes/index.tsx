@@ -38,11 +38,10 @@ const Index = () => {
 
         {/* user routes */}
         {/* Protected Route with a common path */}
-        <Route  path="/dashboard"element={<ProtectedRoute/>} >
-           <Route path="user" element={<UserDashboard />} />
+        <Route path="/dashboard"element={<ProtectedRoute/>} >
+           <Route path="user" element={<UserDashboard/>} />
            <Route path="user/profile" element={<UserProfile />} />
            <Route path="user/orders" element={<UserOrder />} />
-        
         </Route>
     
 

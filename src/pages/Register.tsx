@@ -19,11 +19,13 @@ import { useDispatch } from "react-redux"
 import { registerUser } from "@/services/toolkit/slices/userSlice"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
+import TitlePage from "@/components/ui/TitlePage"
 
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+         <TitlePage title="Sign Up" />
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
        

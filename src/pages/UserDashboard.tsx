@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { Box, TextField, Button, Typography } from "@mui/material"
 import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
-import { RootState } from "@/services/toolkit/store"
-import { UserState } from "@/types"
 import { UserSidebar } from "@/components/layout/sidebar/UserSidebar"
+import { AppDispatch } from "@/services/toolkit/store"
 
-const UserDashboardPage: React.FC = () => {
+const UserDashboard: React.FC = () => {
   const dispatch = useDispatch()
   
-
-
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -27,4 +24,4 @@ const UserDashboardPage: React.FC = () => {
   )
 }
 
-export default UserDashboardPage
+export default UserDashboard

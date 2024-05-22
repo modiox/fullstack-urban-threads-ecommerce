@@ -6,6 +6,7 @@ import { ThemeProvider, Typography } from "@mui/material"
 export const Contact = () => {
   return (
     <ThemeProvider theme={muiTheme}>
+      <TitlePage title="Contact" />
       <div
         style={{
           display: "grid",

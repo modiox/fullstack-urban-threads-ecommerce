@@ -1,11 +1,21 @@
 import React from "react"
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 import { Login } from "react-admin"
 import useUserState from "@/hooks/useUserState"
 
 const AdminRoute = () => {
   const { isLoggedIn, userData } = useUserState()
-  return isLoggedIn && userData?.isAdmin ? <Outlet /> : <Login />
+
+  if (!isLoggedIn) {
+    return <Login />
+  }
+
+  if (!userData?.isAdmin) {
+    return <Navigate to="/dashboard/user" />
+  }
+
+  return <Outlet />
 }
 
 export default AdminRoute
+

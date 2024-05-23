@@ -11,7 +11,7 @@ import { Storage } from "aws-amplify";
 const SingleProduct = (props: { product:Product  }) => {
   const {product} = props; 
   const [showFullDescription, setShowFullDescription] = useState(false)
-    const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [imageUrls, setImageUrls] = useState<string[]>([])
 
   useEffect(() => {
     const fetchImageUrl = async () => {

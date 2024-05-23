@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
 import { fetchProducts, searchProducts } from "@/services/toolkit/slices/productSlice"
 import { Product } from "@/types"
+import { Storage } from "aws-amplify"
 import {
   Button,
   CircularProgress,

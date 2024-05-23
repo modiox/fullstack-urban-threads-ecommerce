@@ -1,7 +1,8 @@
 import api from "@/api";
-import { CategoryState, ProductState } from "@/types";
+import { CategoryState, CreateCategoryFormData, ProductState } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { getToken } from "@/util/localStorage";
 
 
 const initialState: CategoryState = { 
@@ -31,9 +32,31 @@ export const fetchCategories = createAsyncThunk(
       });
       console.log(response.data)
       return response.data
-      console.log(response.data)
     }
   )
+
+  export const deleteCategory = createAsyncThunk(
+    "categories/deleteCategories",
+    async (categoryID: string) => {
+        const token = getToken();
+      const response = await api.delete(`account/dashboard/categories/${categoryID}/delete`,{
+        headers: { Authorization: `Bearer ${token}`} //passing the token 
+      });
+      console.log(response.data)
+      return categoryID
+
+    }
+  )
+
+  export const createCategory = createAsyncThunk("categories/createCategory", async (newCategory: CreateCategoryFormData) => {
+    const token = getToken();
+    const response = await api.post("/account/dashboard/categories/new-category", newCategory,{
+        headers: { Authorization: `Bearer ${token}`} //passing the token 
+      })
+    console.log(response.data.data)
+    return response.data.data
+
+  })
 
 //cases: pending, fulfilling, rejected
 const categorySlice = createSlice({
@@ -47,7 +70,7 @@ const categorySlice = createSlice({
     })
 
     builder.addCase(fetchCategories.fulfilled, (state, action) => {
-      state.categories = action.payload
+      state.categories = action.payload.data
       state.totalPages = action.payload.totalPages
       console.log('Categories:', state.categories); 
       state.error = null
@@ -57,6 +80,28 @@ const categorySlice = createSlice({
       state.error = null
       state.isLoading = false
     })
+
+    builder.addCase(deleteCategory.fulfilled, (state, action) => {
+        state.categories = state.categories.filter((category) => category.categoryID != action.payload)
+        console.log(state.categories)
+        state.isLoading = false;
+      
+      })
+
+      builder.addCase(createCategory.fulfilled, (state, action) => {
+       state.categories.push(action.payload)
+        //state.totalPages = action.payload.totalPages
+    
+      })
+
+      builder.addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+            state.error =null
+            state.isLoading = true
+        }
+      )
+  
 
   
   } 

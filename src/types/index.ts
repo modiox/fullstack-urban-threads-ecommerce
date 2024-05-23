@@ -12,7 +12,7 @@ export type Product = {
 }
 
 export type Category = { 
-  categoryId: string
+  categoryID: string
   name: string
   description: string
   products: Product[]
@@ -91,4 +91,12 @@ export type UpdateUserProfile = {
   firstName: string 
   lastName: string
   address: string 
+}
+
+//category creation type
+
+export type CreateCategoryFormData = {
+  name: string 
+  description: string 
+
 }

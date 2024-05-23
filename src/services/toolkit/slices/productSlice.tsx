@@ -134,12 +134,18 @@ const productSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(searchProducts.fulfilled, (state, action) => {
-      console.log(action.payload)
-      state.products = action.payload
-      state.totalPages = action.payload.totalPages
-      state.error = null
-      state.isLoading = false
-    })
+      console.log(action.payload); 
+      state.products = action.payload || []; 
+      // Check if data and totalPages are defined
+      if (action.payload && action.payload.totalPages !== undefined) {
+        state.totalPages = action.payload.totalPages;
+      } else {
+        state.totalPages = 0; // Default value if totalPages is not defined
+      }
+      state.error = null;
+      state.isLoading = false;
+    });
+
     builder.addCase(searchProducts.rejected, (state) => {
       state.error = null
       state.isLoading = false

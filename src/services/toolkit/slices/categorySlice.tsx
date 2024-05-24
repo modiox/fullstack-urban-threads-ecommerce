@@ -1,5 +1,5 @@
 import api from "@/api";
-import { CategoryState, CreateCategoryFormData, ProductState } from "@/types";
+import { Category, CategoryState, CreateCategoryFormData, ProductState } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { getToken } from "@/util/localStorage";
@@ -58,6 +58,19 @@ export const fetchCategories = createAsyncThunk(
 
   })
 
+  //update/edit category
+  export const updateCategory = createAsyncThunk(
+    "categories/updateCategory",
+    async (category: Category) => {
+      const token = getToken();
+      const response = await api.put(`/account/dashboard/categories/${category.categoryID}/update`, category, {
+        headers: { Authorization: `Bearer ${token}` } //passing the token
+      });
+      return response.data;
+    }
+  );
+  
+
 //cases: pending, fulfilling, rejected
 const categorySlice = createSlice({
   name: "categories",
@@ -81,6 +94,8 @@ const categorySlice = createSlice({
       state.isLoading = false
     })
 
+    //Delete Category
+
     builder.addCase(deleteCategory.fulfilled, (state, action) => {
         state.categories = state.categories.filter((category) => category.categoryID != action.payload)
         console.log(state.categories)
@@ -92,6 +107,23 @@ const categorySlice = createSlice({
        state.categories.push(action.payload)
         //state.totalPages = action.payload.totalPages
     
+      })
+
+      //Edit Category 
+      .addCase(updateCategory.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const index = state.categories.findIndex(category => category.categoryID === action.payload.categoryID);
+        if (index !== -1) {
+          state.categories[index] = action.payload;
+        }
+      })
+      .addCase(updateCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to update category';
       })
 
       builder.addMatcher(

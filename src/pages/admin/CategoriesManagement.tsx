@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/services/toolkit/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/services/toolkit/store";
 import { Category, CreateCategoryFormData } from "@/types";
 import {
-  Avatar,
   Box,
   Button,
   CircularProgress,
@@ -12,16 +11,13 @@ import {
   CssBaseline,
   FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   Typography
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import useCategoryState from "@/hooks/useCategoryState";
-import { createCategory, fetchCategories } from "@/services/toolkit/slices/categorySlice";
+import { createCategory, fetchCategories, updateCategory } from "@/services/toolkit/slices/categorySlice";
 import SingleCategory from "@/components/ui/SingleCategory";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import muiTheme from "@/util/muiTheme";
@@ -40,23 +36,39 @@ const CategoriesManagement = () => {
   }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<CreateCategoryFormData>();
 
   const onSubmit: SubmitHandler<CreateCategoryFormData> = async (data) => {
-    try { 
-       const res = await dispatch(createCategory(data))
-       console.log(res)
+    try {
+      if (isEdit && currentCategory) {
+        await dispatch(updateCategory({ ...currentCategory, ...data }));
+      } else {
+        await dispatch(createCategory(data));
       }
+      setIsFormOpen(false);
+      setIsEdit(false);
+      setCurrentCategory(null);
+      reset();
+      dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy })); //This ensures the data are up-to-date
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-      catch (err) {
-        console.log(err)
-      }
+  const handleEditCategory = (category: Category) => {
+    setIsFormOpen(true);
+    setIsEdit(true);
+    setCurrentCategory(category);
+    reset(category);
   };
 
   const handlePreviousPage = () => {
@@ -91,9 +103,13 @@ const CategoriesManagement = () => {
           Category Management
         </Typography>
         <AdminSidebar />
-      
 
-        <Button onClick={() => setIsFormOpen(!isFormOpen)}>
+        <Button onClick={() => {
+          setIsFormOpen(!isFormOpen);
+          setIsEdit(false);
+          reset();
+          setCurrentCategory(null);
+        }}>
           {isFormOpen ? "Close" : "Create Category"}
         </Button>
 
@@ -109,7 +125,7 @@ const CategoriesManagement = () => {
               }}
             >
               <Typography component="h1" variant="h5">
-                Edit Category
+                {isEdit ? "Edit Category" : "Create Category"}
               </Typography>
               <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
@@ -145,7 +161,7 @@ const CategoriesManagement = () => {
                   </Grid>
                 </Grid>
                 <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Save Changes
+                  {isEdit ? "Save Changes" : "Create Category"}
                 </Button>
               </Box>
             </Box>
@@ -174,27 +190,12 @@ const CategoriesManagement = () => {
             </Typography>
           )}
 
-          <FormControl sx={{ marginBottom: 2, width: "20%" }}>
-            <InputLabel id="sort-by-label">Filter</InputLabel>
-            <Select
-              labelId="sort-by-label"
-              id="sort-by"
-              label="Filter"
-              value={sortBy}
-              onChange={handleSortChange}
-              fullWidth
-            >
-              <MenuItem value="20">Price Low to High</MenuItem>
-              <MenuItem value="30">Price High to Low</MenuItem>
-            </Select>
-          </FormControl>
-
           <Grid container spacing={2} justifyContent="center">
             {categories &&
               categories.length > 0 &&
               categories.map((category) => (
                 <Grid item xs={12} sm={6} md={4} key={category.categoryID}>
-                  <SingleCategory category={category} />
+                  <SingleCategory category={category} onEdit={handleEditCategory} />
                 </Grid>
               ))}
           </Grid>

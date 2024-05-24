@@ -5,7 +5,7 @@ import { ThemeProvider } from "@emotion/react";
 import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CardContent } from "./card";
-import { Storage } from "aws-amplify";
+// import { Storage } from "aws-amplify";
 
 
 const SingleProduct = (props: { product:Product  }) => {
@@ -13,20 +13,20 @@ const SingleProduct = (props: { product:Product  }) => {
   const [showFullDescription, setShowFullDescription] = useState(false)
   const [imageUrls, setImageUrls] = useState<string[]>([])
 
-  useEffect(() => {
-    const fetchImageUrl = async () => {
-      try {
-        if (product.image && product.image.length > 0) {
-           const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
-          setImageUrls(urls)
-        }
-      } catch (error) {
-        console.error("Error fetching image from S3:", error)
-      }
-    }
+  // useEffect(() => {
+  //   const fetchImageUrl = async () => {
+  //     try {
+  //       if (product.image && product.image.length > 0) {
+  //          const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
+  //         setImageUrls(urls)
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching image from S3:", error)
+  //     }
+  //   }
 
-    fetchImageUrl()
-  }, [product.image])
+  //   fetchImageUrl()
+  // }, [product.image])
 
   
 

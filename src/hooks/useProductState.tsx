@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import { RootState } from '@/services/toolkit/store';
 
 const useProductState = () => {
-  const { userData, isLoading, error, totalPages, isLoggedIn } = useSelector(
-    (state: RootState) => state.userR
+  const { products, isLoading, error, totalPages } = useSelector(
+    (state: RootState) => state.productR
   );
 
-  return { userData, isLoading, error, totalPages, isLoggedIn };
+  return { products, isLoading, error, totalPages };
 }
 
 export default useProductState;

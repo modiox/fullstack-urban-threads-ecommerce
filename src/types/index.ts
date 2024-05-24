@@ -102,3 +102,15 @@ export type CreateCategoryFormData = {
   description: string 
 
 }
+
+export type CreateProductFormData = { 
+  productID: string
+  productName: string 
+  price: number 
+  description: string 
+  catergoryID: string 
+  quantity: number 
+
+
+}
+

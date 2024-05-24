@@ -10,15 +10,20 @@ import {
   Container,
   CssBaseline,
   FormControl,
-  Grid,
   TextField,
-  Typography
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Grid
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import useCategoryState from "@/hooks/useCategoryState";
-import { createCategory, fetchCategories, updateCategory } from "@/services/toolkit/slices/categorySlice";
-import SingleCategory from "@/components/ui/SingleCategory";
+import { createCategory, fetchCategories, updateCategory, deleteCategory } from "@/services/toolkit/slices/categorySlice";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import muiTheme from "@/util/muiTheme";
 
@@ -71,6 +76,15 @@ const CategoriesManagement = () => {
     reset(category);
   };
 
+  const handleDeleteCategory = async (categoryId: string) => {
+    try {
+      await dispatch(deleteCategory(categoryId));
+      dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy })); // Refresh categories after deletion
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1);
   };
@@ -82,11 +96,6 @@ const CategoriesManagement = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
   };
-
-  // const handleSortChange = (e: SelectChangeEvent<string>) => {
-  //   const value = e.target.value;
-  //   setSortBy(value);
-  // };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -190,15 +199,31 @@ const CategoriesManagement = () => {
             </Typography>
           )}
 
-          <Grid container spacing={2} justifyContent="center">
-            {categories &&
-              categories.length > 0 &&
-              categories.map((category) => (
-                <Grid item xs={12} sm={6} md={4} key={category.categoryID}>
-                  <SingleCategory category={category} onEdit={handleEditCategory} />
-                </Grid>
-              ))}
-          </Grid>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {categories &&
+                  categories.length > 0 &&
+                  categories.map((category) => (
+                    <TableRow key={category.categoryID}>
+                      <TableCell>{category.name}</TableCell>
+                      <TableCell>{category.description}</TableCell>
+                      <TableCell>
+                        <Button variant={ "contained"} size="small" onClick={() => handleEditCategory(category)}>Edit</Button>
+                        <Button variant={ "contained"} color="error" size="small" onClick={() => handleDeleteCategory(category.categoryID)}>Delete</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
           <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
             <Button

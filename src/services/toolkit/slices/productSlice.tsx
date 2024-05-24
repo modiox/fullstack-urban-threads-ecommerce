@@ -1,7 +1,8 @@
 import api from "@/api";
-import { ProductState } from "@/types";
+import { CreateProductFormData, Product, ProductState } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { getToken } from "@/util/localStorage";
 
 //type definition of the initialState
 
@@ -88,6 +89,44 @@ export const fetchProductsById = createAsyncThunk("products/fetchProductsById", 
   return response.data
  
 })
+//Create products 
+export const createProduct = createAsyncThunk("products/createProduct", async (newProduct: CreateProductFormData) => {
+  const token = getToken();
+  const response = await api.post("/dashboard/new-post", newProduct,{
+      headers: { Authorization: `Bearer ${token}`} //passing the token 
+    })
+    console.log(response)
+  return response.data
+
+})
+//Delete products 
+
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProducts",
+  async (productID: string) => {
+      const token = getToken();
+    const response = await api.delete(`/dashboard/products/${productID}/delete`,{
+      headers: { Authorization: `Bearer ${token}`} //passing the token 
+    });
+    console.log(response.data)
+    return productID
+
+  }
+) 
+
+
+//update/edit category
+export const updateProduct = createAsyncThunk(
+  "products/updateProducts",
+  async (product: Product) => {
+    const token = getToken();
+    const response = await api.put(`/dashboard/products/${product.productID}/update`, product, {
+      headers: { Authorization: `Bearer ${token}` } //passing the token
+    });
+    return response.data;
+  }
+); 
+
 
 //cases: pending, fulfilling, rejected
 const productSlice = createSlice({
@@ -151,6 +190,40 @@ const productSlice = createSlice({
       state.isLoading = false
    
     }) 
+
+    // Create products
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
+      state.products = state.products.filter(
+        (product) => product.productID !== action.payload
+      );
+      state.isLoading = false;
+      state.error = null;
+    
+    })
+
+    builder.addCase(createProduct.fulfilled, (state, action) => {
+     state.products.push(action.payload)
+     console.log(action.payload)
+  
+    })
+
+    //Edit Product 
+    .addCase(updateProduct.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(updateProduct.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const index = state.products.findIndex(product => product.productID === action.payload.productID);
+      if (index !== -1) {
+        state.products[index] = action.payload;
+      }
+    })
+    .addCase(updateProduct.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Failed to update product';
+    })
+
   }
  
 

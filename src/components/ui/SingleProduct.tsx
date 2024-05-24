@@ -88,7 +88,7 @@ const SingleProduct = (props: { product:Product  }) => {
             variant="contained"
             color="secondary"
             sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px" }}
-            size="small"
+            size="small" 
           >
             Add To Cart
           </Button>

@@ -18,15 +18,16 @@ export const Home = () => {
               display: "grid",
               justifyContent: "center",
               alignItems: "center",
-              height: "70vh"
+              height: "70vh",
             }}
+            
           >
             <div>
               <TitlePage title="Home" />
               <img src={"Logo.png"} alt="Logo" style={{ height: "500px", marginRight: "20px" }} />
               <h3> URBAN THREADS</h3>
               <Link to={"/products"}>
-                <Button> SHOP NOW</Button>
+                <Button color="primary" size="large"> SHOP NOW</Button>
               </Link>
               <div> </div>
             </div>

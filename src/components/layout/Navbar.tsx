@@ -11,7 +11,10 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  BadgeProps,
+  styled,
+  Badge
 } from "@mui/material"
 import { useTheme, useMediaQuery } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
@@ -20,6 +23,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
 import { logoutUser } from "@/services/toolkit/slices/userSlice"
+import { ShoppingCartIcon } from "lucide-react"
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -60,6 +64,15 @@ const Navbar = () => {
     display: "inline-block"
   }
 
+  const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: -3,
+      top: 13,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: '0 4px',
+    },
+  }));
+
   const drawer = (
     <div onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} style={{ width: 250 }}>
       <List>
@@ -97,6 +110,22 @@ const Navbar = () => {
         >
           <ListItemText primary="Contact" />
         </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to="/cart"
+          style={{ textDecoration: "none" }}
+          sx={{color:"secondary.light"}}
+        >
+          <IconButton aria-label="cart">
+           <StyledBadge badgeContent={2} sx={{color:"secondary.main"}}> 
+           {/* Will change the badgecontent to reflect the actual number of items in a cart */}
+            <ShoppingCartIcon />
+            </StyledBadge>
+            </IconButton>
+          <ListItemText/>
+        </ListItem>
+        
 
         {isLoggedIn && (
           <>
@@ -249,8 +278,27 @@ const Navbar = () => {
                       Contact
                     </Link>
                   </li>
+                  <li> 
+              <ListItem
+          button
+          component={Link}
+          to="/cart"
+          style={{ textDecoration: "none" }}
+          sx={{color:"secondary.main"}}
+        >
+          <IconButton aria-label="cart">
+           <StyledBadge badgeContent={2} sx={{color:"primary.light"}}> 
+           {/* Will change the badgecontent to reflect the actual number of items in a cart */}
+            <ShoppingCartIcon />
+            </StyledBadge>
+            </IconButton>
+          <ListItemText/>
+        </ListItem>
+              </li>
                 </>
+                
               )}
+         
             </ul>
             {isMobile && (
               <IconButton

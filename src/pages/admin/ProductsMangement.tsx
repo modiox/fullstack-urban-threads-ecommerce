@@ -21,7 +21,9 @@ import {
   Paper,
   Grid,
   MenuItem,
-  Menu
+  Menu,
+  tableCellClasses,
+  styled
 } from "@mui/material";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import muiTheme from "@/util/muiTheme";
@@ -113,9 +115,32 @@ const ProductsManagement = () => {
     setPageNumber((currentPage) => Math.min(currentPage + 1, totalPages));
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
+  // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchKeyword(e.target.value);
+  // };
+  const handleSearchClick = () => {
+    dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }));
   };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -259,18 +284,26 @@ const ProductsManagement = () => {
         )}
 
         <div style={{ width: "100%", maxWidth: "1200px", padding: "20px", marginTop: "100px" }}>
-          <FormControl sx={{ marginBottom: 1, width: "100%" }}>
-            <TextField
-              label="Search Products"
-              variant="outlined"
-              type="text"
-              name="search"
-              color="secondary"
-              size="small"
-              value={keyword}
-              onChange={handleSearchChange}
-              fullWidth
-            />
+        <FormControl sx={{ marginBottom: 1, width: "100%" }}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={9}>
+                <TextField
+                  label="Search Products"
+                  variant="outlined"
+                  type="text"
+                  name="search"
+                  color="secondary"
+                  size="small"
+                  value={keyword}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Button variant="contained" color="primary" onClick={handleSearchClick}>
+                  Search
+                </Button>
+              </Grid>
+            </Grid>
           </FormControl>
 
           {isLoading && <CircularProgress />}
@@ -284,31 +317,31 @@ const ProductsManagement = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Category: </TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <StyledTableCell>ID</StyledTableCell>
+                  <StyledTableCell>Name</StyledTableCell>
+                  <StyledTableCell>Description</StyledTableCell>
+                  <StyledTableCell>Category</StyledTableCell>
+                  <StyledTableCell>Price</StyledTableCell>
+                  <StyledTableCell>Quantity</StyledTableCell>
+                  <StyledTableCell>Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {products &&
                   products.length > 0 &&
                   products.map((product) => (
-                    <TableRow key={product.productID}>
+                    <StyledTableRow key={product.productID}>
                       <TableCell>{product.productID}</TableCell>
                       <TableCell>{product.productName}</TableCell>
                       <TableCell>{product.description}</TableCell>
-                      <TableCell>{product.categories && product.categories.map((category) => category.name).join(", ")}</TableCell>
+                      <TableCell>{product.categories && product.categories.map((category) => category.name).join(",")}</TableCell>
                       <TableCell>{product.price}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell>
                         <Button variant="contained" size="small" onClick={() => handleEditProduct(product)}>Edit</Button>
                         <Button variant="contained" color="error" size="small" onClick={() => handleDeleteProduct(product.productID)}>Delete</Button>
                       </TableCell>
-                    </TableRow>
+                    </StyledTableRow>
                   ))}
               </TableBody>
             </Table>

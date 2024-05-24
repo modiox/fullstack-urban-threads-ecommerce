@@ -27,7 +27,7 @@ const SingleCategory = (props: { category: Category; onEdit: (category: Category
           {category.description}
         </Typography>
         <Button onClick={() => onEdit(category)}>Edit</Button>
-        <Button onClick={() => handleDeleteCat(category.categoryID)}>Delete</Button>
+        <Button onClick={() => handleDeleteCat(category.categoryID)} color="error">Delete</Button>
       </CardContent>
     </Card>
   );

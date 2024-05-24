@@ -6,10 +6,14 @@ const muiTheme = createTheme({
   palette: {
     //colors
     primary: {
-      main: "#666699"
+      main: "#2D3250",
+      light: "#FFFFFF"
     },
     secondary: {
-      main: "#996699"
+      main: "#7077A1",
+      light: "#F6B17A",
+
+
     }
   }, //font
   typography: {

@@ -64,13 +64,13 @@ export default function SignUp() {
       const response = await dispatch(registerUser(data))
       console.log("Response from register" + response.payload.message)
       toast.success("User created successfully")
-      // navigate("/login")
+      navigate("/login")
     } catch (error: any) {
       console.error("Error:", error)
       if (error && error.message) {
-        toast.error(error.message)
+        toast.error("Registration failed..")
       } else {
-        toast.error("Registration Failed")
+        toast.error(error.message)
       }
     }
   }
@@ -221,7 +221,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, color:"secondary.light", size:"medium"}} >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">

@@ -113,8 +113,8 @@ const Products = () => {
               fullWidth
             >
               {/* Filtering products by price */}
-              <MenuItem value="20">Price Low to High</MenuItem>
-              <MenuItem value="30">Price High to Low</MenuItem>
+              <MenuItem value="20">Price High to Low</MenuItem>
+              <MenuItem value="30">Price Low to High</MenuItem>
             </Select>
           </FormControl>
           <Button onClick={handleSearchAndFilter}>Search</Button>

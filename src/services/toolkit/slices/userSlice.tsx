@@ -1,7 +1,7 @@
 import api from "@/api"
 import {  LoginFormData, UpdateUserProfile, User, UserState } from "@/types"
 import { getLocalStorage, getToken, setLocalStorage } from "@/util/localStorage";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
  
 
 
@@ -18,12 +18,41 @@ const data = getLocalStorage("loginData", {
 const initialState: UserState = {
   error: null,
   isLoading: false,
+  users: [],
+  isAdmin: data.isLoggedIn,
   userData: data.userData || null,
   token: data.token || null,
   isLoggedIn: !!data.token,
   user: null,
-  totalPages: 0,
+  totalPages: 1,
 };
+
+//fetch users 
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async ({
+    pageNumber,
+    pageSize,
+    keyword,
+    sortBy,
+  
+  }: {
+    pageNumber: number
+    pageSize: number
+    keyword: string
+    sortBy: string
+    
+  }) => {
+    const token = getToken();
+    const response = await api.get(
+      `account/dashboard/users?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {headers: { Authorization: `Bearer ${token}`}} //passing the token 
+    )
+    console.log(response.data)
+    return response.data
+    console.log(response.data)
+  }
+)
 export const registerUser = createAsyncThunk(
   "userSlice/registerUser",
   async (newUser: User) => {
@@ -37,7 +66,7 @@ export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData
   console.log(response.data.message)
   return response.data
 })
-//update user info
+//Update user info
 export const updateUser = createAsyncThunk(
   "userSlice/updateUser",
   async ({ updateUserData, userId }: { updateUserData: UpdateUserProfile, userId: string | undefined }) => {
@@ -51,6 +80,18 @@ export const updateUser = createAsyncThunk(
     return response.data;
   }
 );
+// Block/Unblock user action
+export const blockUnblockUser = createAsyncThunk(
+  "users/blockUnblockUser",
+  async ({ userId, isBanned }: { userId: string; isBanned: boolean }) => {
+    const response = await api.put('/api/account/my-profile/update', {
+      userId,
+      isBanned,
+    });
+    return response.data;
+  }
+);
+
 //cases: pending, fulfilling, rejected
 const userSlice = createSlice({
   name: "users",
@@ -86,6 +127,20 @@ const userSlice = createSlice({
           token: state.token })
       }
     })
+    //fetch users 
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      state.users = action.payload.data
+      state.totalPages = action.payload.data.totalPages
+      state.error = null
+      state.isLoading = false
+    })
+    //Block/unblock user
+    builder.addCase(blockUnblockUser.fulfilled, (state, action: PayloadAction<User>) => {
+      const index = state.users.findIndex((user) => user.userId === action.payload.userId);
+      if (index !== -1) {
+        state.users[index] = action.payload;
+      }
+    });
     builder.addMatcher(
       (action) => action.type.endsWith("/pending"),
       (state) => {

@@ -33,7 +33,9 @@ const Navbar = () => {
     setAnchorEl(null)
   }
 
-  const {isLoggedIn} = useSelector((state:RootState)=> state.userR) 
+  //const {isLoggedIn} = useSelector((state:RootState)=> state.userR) 
+  const isLoggedIn = useSelector((state: RootState) => state.userR.isLoggedIn);
+  const isAdmin = useSelector((state: RootState) => state.userR.isAdmin);
 
   const dispatch:AppDispatch = useDispatch()
   const handleLogout = () => { 
@@ -67,7 +69,7 @@ const Navbar = () => {
           to="/"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-          <ListItemText primary="Home" />
+        <ListItemText primary="Home" />
         </ListItem>
         <ListItem
           button
@@ -77,14 +79,7 @@ const Navbar = () => {
         >
           <ListItemText primary="Shop" />
         </ListItem>
-        <ListItem
-          button
-          component={Link}
-          to="/dashboard"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <ListItemText primary="Dashboard" />
-        </ListItem>
+      
 
         <ListItem
           button
@@ -105,6 +100,9 @@ const Navbar = () => {
 
         {isLoggedIn && (
           <>
+           {/* <ListItem button component={Link} to={isAdmin ? "/dashboard/admin" : "/dashboard/user"}>
+            <ListItemText primary="Dashboard" />
+           </ListItem> */}
             <ListItem style={navItemStyle}>
               <Link
                 to="/"
@@ -173,10 +171,11 @@ const Navbar = () => {
                           textTransform: "capitalize",
                           display: "flex",
                           alignItems: "center",
+                          fontSize: "15",
                           padding: 0
                         }}
                       >
-                        Shop <KeyboardArrowDownIcon />
+                        Shop
                       </Button>
                     )}
                     <Menu
@@ -202,11 +201,11 @@ const Navbar = () => {
                       </MenuItem>
                     </Menu>
                   </div>
-                  <li style={navItemStyle}>
+                  {/* <li style={navItemStyle}>
                     <Link to="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
                       Dashboard
                     </Link>
-                  </li>
+                  </li> */}
                   <li style={navItemStyle}>
                     <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
                       Register

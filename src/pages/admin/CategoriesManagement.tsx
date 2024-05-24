@@ -83,10 +83,10 @@ const CategoriesManagement = () => {
     setSearchKeyword(e.target.value);
   };
 
-  const handleSortChange = (e: SelectChangeEvent<string>) => {
-    const value = e.target.value;
-    setSortBy(value);
-  };
+  // const handleSortChange = (e: SelectChangeEvent<string>) => {
+  //   const value = e.target.value;
+  //   setSortBy(value);
+  // };
 
   return (
     <ThemeProvider theme={muiTheme}>

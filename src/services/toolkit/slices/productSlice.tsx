@@ -161,4 +161,3 @@ export const selectIsLoading = (state:RootState) => state.productR.isLoading
 export const selectError = (state:RootState) => state.productR.error
 
 export default productSlice.reducer
-

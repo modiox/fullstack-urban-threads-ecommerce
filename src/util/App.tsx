@@ -9,41 +9,41 @@ import "@aws-amplify/ui-react/styles.css"
 // import awsConfig from "./awsConfig" 
 
 
-Storage.configure({
-  AWSS3: {
-    bucket: "myimagesfrontend", // bucket name
-    region: "eu-north-1" // bucket region
-  }
-})
+// Storage.configure({
+//   AWSS3: {
+//     bucket: "myimagesfrontend", // bucket name
+//     region: "eu-north-1" // bucket region
+//   }
+// })
 
 
 const App: React.FC = () => {
-  const [fileUrl, setFileUrl] = useState("")
-  const [file, setFile] = useState<File | null>(null)
-  const [fileName, setFileName] = useState("")
+  // const [fileUrl, setFileUrl] = useState("")
+  // const [file, setFile] = useState<File | null>(null)
+  // const [fileName, setFileName] = useState("")
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files ? e.target.files[0] : null
-    if (selectedFile) {
-      setFileUrl(URL.createObjectURL(selectedFile))
-      setFile(selectedFile)
-      setFileName(selectedFile.name)
-    }
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files ? e.target.files[0] : null
+  //   if (selectedFile) {
+  //     setFileUrl(URL.createObjectURL(selectedFile))
+  //     setFile(selectedFile)
+  //     setFileName(selectedFile.name)
+  //   }
+  // }
 
-  const saveFile = async () => {
-    if (file) {
-      try {
-        await Storage.put(fileName, file)
-        console.log("Successfully saved image")
-        setFileUrl("")
-        setFile(null)
-        setFileName("")
-      } catch (err) {
-        console.log("Error uploading the images", err)
-      }
-    }
-  }
+  // const saveFile = async () => {
+  //   if (file) {
+  //     try {
+  //       await Storage.put(fileName, file)
+  //       console.log("Successfully saved image")
+  //       setFileUrl("")
+  //       setFile(null)
+  //       setFileName("")
+  //     } catch (err) {
+  //       console.log("Error uploading the images", err)
+  //     }
+  //   }
+  // }
 
   return (
     <div>
@@ -51,9 +51,9 @@ const App: React.FC = () => {
       <Index />
       <ToastContainer />
       <Footer />
-      <input type="file" onChange={handleChange} />
+      {/* <input type="file" onChange={handleChange} />
       {fileUrl && <img src={fileUrl} alt="Preview" />}
-      <button onClick={saveFile}>Save file</button>
+      <button onClick={saveFile}>Save file</button> */}
     </div>
   )
 }

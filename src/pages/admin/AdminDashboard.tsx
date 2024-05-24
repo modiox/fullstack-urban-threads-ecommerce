@@ -19,47 +19,25 @@ const AdminDashboard: React.FC = () => {
     
     <ThemeProvider theme={muiTheme}>
       <TitlePage title="Admin Dashboard" /> 
-      
-        
-      <Box sx={{ padding: "100px", alignContent: "center" }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Welcome to your dashboard, Admin! 
+     
+      <div
+        className="product-container"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: "80vh"
+        }}
+      >
+        <Typography variant="h5" component="div" sx={{ my: 2 }}>
+     
         </Typography>
-       <div className="admin-sidebar"> <AdminSidebar/> </div>
-        <Box
-          component="form"
-          sx={{ display: "flex", flexDirection: "column", gap: "23px", maxWidth: "400px" }}
-        >
-          <TextField
-            label="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
-          <TextField
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <TextField
-            label="Price"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(parseFloat(e.target.value))}
-          />
-          <TextField
-            label="Product ID (for update/delete)"
-            value={productID}
-            onChange={(e) => setProductID(e.target.value)}
-          />
-          <Button variant="contained">Add Product</Button>
-          <Button variant="contained">
-            Update Product {/* will add onClick Buttons later :)  */}
-          </Button>
-          <Button variant="contained" color="error">
-            Delete Product
-          </Button>
-        </Box>
-      </Box>
+        <AdminSidebar />
+
+      </div>
+        
+      
+     
     </ThemeProvider>
   )
 }

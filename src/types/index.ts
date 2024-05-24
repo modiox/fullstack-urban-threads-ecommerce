@@ -55,11 +55,13 @@ export type User = {
 }
 export type UserState = {
   user: User | null
+  users: User[]
   totalPages: number
   error: null | string
   isLoading: boolean
   userData: User | null
   isLoggedIn: boolean 
+  isAdmin: boolean
   token: null | string
 
   

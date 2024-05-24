@@ -14,6 +14,7 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Pagination,
   Select,
   TextField,
   Typography
@@ -156,6 +157,9 @@ const Products = () => {
             >
               Next
             </Button>
+  
+
+
           </div>
         </div>
       </div>

@@ -54,6 +54,7 @@ export const searchProducts = createAsyncThunk(
 
     )
      return response.data 
+     
   }
   
  

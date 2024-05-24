@@ -42,7 +42,6 @@ const Products = () => {
 
   const handleSearchAndFilter = async () => {
     await dispatch(searchProducts({ pageNumber, pageSize, keyword, isAscending, sortBy }))
-    await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
   }
 
   const handlePreviousPage = () => {

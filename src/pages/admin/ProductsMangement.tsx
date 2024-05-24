@@ -19,7 +19,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Grid
+  Grid,
+  MenuItem,
+  Menu
 } from "@mui/material";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import muiTheme from "@/util/muiTheme";
@@ -34,6 +36,7 @@ type CreateProductFormData = {
   description: string;
   price: number;
   quantity: number;
+  categoryID: string
 };
 
 const ProductsManagement = () => {
@@ -47,15 +50,12 @@ const ProductsManagement = () => {
   const [sortBy, setSortBy] = useState("keyword");
   const [selectedCategory, setSelectedCategory] = useState("");
 
+
   useEffect(() => {
     dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy }));
     dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }));
   }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
-
-  // useEffect(() => {
-  //   const fetchData = async () => { await dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy })); } 
-  // }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
   useEffect(() => {
     dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }));
@@ -185,6 +185,29 @@ const ProductsManagement = () => {
                       defaultValue=""
                       render={({ field }) => (
                         <TextField {...field} label="Description" fullWidth />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                  <Controller
+                      name="categoryID"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <FormControl fullWidth>
+                          <TextField
+                            select
+                            label="Category"
+                            {...field}
+                          >
+                            {categories.map((category) => (
+                              <MenuItem key={category.categoryID} value={category.categoryID}>
+                                {category.name}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </FormControl>
                       )}
                     />
                   </Grid>

@@ -19,7 +19,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Grid
+  Grid,
+  styled,
+  tableCellClasses
 } from "@mui/material";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import useCategoryState from "@/hooks/useCategoryState";
@@ -38,6 +40,7 @@ const CategoriesManagement = () => {
 
   useEffect(() => {
     dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy }));
+    console.log("Total Pages:", totalPages); //It doesn't get printed? 
   }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -86,16 +89,42 @@ const CategoriesManagement = () => {
   };
 
   const handlePreviousPage = () => {
-    setPageNumber((currentPage) => currentPage - 1);
+    setPageNumber((currentPage) => Math.max(currentPage - 1, 1));
   };
 
   const handleNextPage = () => {
-    setPageNumber((currentPage) => currentPage + 1);
+    setPageNumber((currentPage) => Math.min(currentPage + 1, totalPages));
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
   };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+
+  const handleSearchClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy }));
+    
+  };
+  
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -113,7 +142,7 @@ const CategoriesManagement = () => {
         </Typography>
         <AdminSidebar />
 
-        <Button onClick={() => {
+        <Button  color="warning" size ="large" sx={{ margin: "10px "}} onClick={() => {
           setIsFormOpen(!isFormOpen);
           setIsEdit(false);
           reset();
@@ -179,7 +208,9 @@ const CategoriesManagement = () => {
 
         <div style={{ width: "100%", maxWidth: "1200px", padding: "20px", marginTop: "100px" }}>
           <FormControl sx={{ marginBottom: 1, width: "100%" }}>
-            <TextField
+            <Grid container spacing={1} alignItems="center"> 
+              <Grid item xs={9}> 
+              <TextField
               label="Search Categories"
               variant="outlined"
               type="text"
@@ -190,6 +221,15 @@ const CategoriesManagement = () => {
               onChange={handleSearchChange}
               fullWidth
             />
+              </Grid> 
+              <Grid item xs={3}>
+                <Button variant="contained" color="primary" onClick={handleSearchClick}>
+                  Search
+                </Button>
+              </Grid>
+            </Grid>
+           
+            
           </FormControl>
 
           {isLoading && <CircularProgress />}
@@ -203,23 +243,23 @@ const CategoriesManagement = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <StyledTableCell>Name</StyledTableCell>
+                  <StyledTableCell>Description</StyledTableCell>
+                  <StyledTableCell>Actions</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {categories &&
                   categories.length > 0 &&
                   categories.map((category) => (
-                    <TableRow key={category.categoryID}>
+                    <StyledTableRow key={category.categoryID}>
                       <TableCell>{category.name}</TableCell>
                       <TableCell>{category.description}</TableCell>
                       <TableCell>
                         <Button variant={ "contained"} size="small" onClick={() => handleEditCategory(category)}>Edit</Button>
                         <Button variant={ "contained"} color="error" size="small" onClick={() => handleDeleteCategory(category.categoryID)}>Delete</Button>
                       </TableCell>
-                    </TableRow>
+                    </StyledTableRow>
                   ))}
               </TableBody>
             </Table>
@@ -234,7 +274,8 @@ const CategoriesManagement = () => {
             >
               Previous
             </Button>
-            {Array.from({ length: totalPages }, (_, index) => (
+            {totalPages > 1 && 
+              Array.from({ length: totalPages }, (_, index) => (
               <Button
                 key={index}
                 onClick={() => setPageNumber(index + 1)}

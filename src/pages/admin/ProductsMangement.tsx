@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/services/toolkit/store";
-import { Product, CreateProductFormData } from "@/types";
+import { Product } from "@/types";
 import {
   Box,
   Button,
@@ -23,12 +23,13 @@ import {
   MenuItem,
   Menu,
   tableCellClasses,
-  styled
+  styled,
+  SelectChangeEvent
 } from "@mui/material";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import muiTheme from "@/util/muiTheme";
 import useProductState from "@/hooks/useProductState";
-import { fetchProducts, createProduct, updateProduct, deleteProduct } from "@/services/toolkit/slices/productSlice";
+import { fetchProducts, createProduct, updateProduct, deleteProduct, searchProducts } from "@/services/toolkit/slices/productSlice";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { fetchCategories } from "@/services/toolkit/slices/categorySlice";
 
@@ -42,15 +43,15 @@ type CreateProductFormData = {
 };
 
 const ProductsManagement = () => {
-  const { products, isLoading, error, totalPages } = useProductState();
+  const { products, isLoading, error, totalPages } = useProductState() as { products: Product[]; isLoading: boolean; error: string; totalPages: number };
   const categories = useSelector((state: RootState) => state.categoryR.categories); 
+
 
   const dispatch: AppDispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(3);
   const [keyword, setSearchKeyword] = useState("");
   const [sortBy, setSortBy] = useState("keyword");
-  const [selectedCategory, setSelectedCategory] = useState("");
 
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const ProductsManagement = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  const [isAscending, setAscending] = useState("")
 
   const {
     control,
@@ -115,11 +117,13 @@ const ProductsManagement = () => {
     setPageNumber((currentPage) => Math.min(currentPage + 1, totalPages));
   };
 
-  // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchKeyword(e.target.value);
-  // };
-  const handleSearchClick = () => {
-    dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }));
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+  const handleSearchClick = async (e: SelectChangeEvent<string>) => {
+    await dispatch(searchProducts({ pageNumber, pageSize, keyword, isAscending, sortBy }))
+  
+      setAscending("true") 
   };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -158,7 +162,7 @@ const ProductsManagement = () => {
         </Typography>
         <AdminSidebar />
 
-        <Button onClick={() => {
+        <Button color="warning" size ="large" sx={{ margin: "10px "}}onClick={() => {
           setIsFormOpen(!isFormOpen);
           setIsEdit(false);
           reset();
@@ -242,7 +246,7 @@ const ProductsManagement = () => {
                       name="price"
                       control={control}
                       defaultValue={0}
-                      rules={{ required: "Price is required", valueAsNumber: true }}
+                      rules={{ required: "Price is required" }}
                       render={({ field }) => (
                         <TextField
                           {...field}
@@ -251,6 +255,7 @@ const ProductsManagement = () => {
                           type="number"
                           error={!!errors.price}
                           helperText={errors.price ? errors.price.message : ""}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value))}
                         />
                       )}
                     />
@@ -261,7 +266,7 @@ const ProductsManagement = () => {
                       name="quantity"
                       control={control}
                       defaultValue={0}
-                      rules={{ required: "Quantity is required", valueAsNumber: true }}
+                      rules={{ required: "Quantity is required" }}
                       render={({ field }) => (
                         <TextField
                           {...field}
@@ -270,6 +275,7 @@ const ProductsManagement = () => {
                           type="number"
                           error={!!errors.quantity}
                           helperText={errors.quantity ? errors.quantity.message : ""}
+                          onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
                         />
                       )}
                     />
@@ -295,6 +301,7 @@ const ProductsManagement = () => {
                   color="secondary"
                   size="small"
                   value={keyword}
+                  onChange={handleSearchChange}
                   fullWidth
                 />
               </Grid>
@@ -334,7 +341,7 @@ const ProductsManagement = () => {
                       <TableCell>{product.productID}</TableCell>
                       <TableCell>{product.productName}</TableCell>
                       <TableCell>{product.description}</TableCell>
-                      <TableCell>{product.categories && product.categories.map((category) => category.name).join(",")}</TableCell>
+                      <TableCell>{product.categoryID && categories.find(category => category.categoryID === product.categoryID)!.name}</TableCell>
                       <TableCell>{product.price}</TableCell>
                       <TableCell>{product.quantity}</TableCell>
                       <TableCell>

@@ -3,7 +3,7 @@ import muiTheme from "@/util/muiTheme";
 import { ThemeProvider, Typography, Box } from "@mui/material";
 import TitlePage from "@/components/ui/TitlePage";
 
-const Contact = () => {
+const ContactPage = () => {
   return (
     <ThemeProvider theme={muiTheme}>
       <Box
@@ -35,4 +35,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactPage;

@@ -1,20 +1,11 @@
 import React from "react"
 
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from "../pages/Home"
-import About from "../pages/AboutPage"
-import Contact from "../pages/ContactPage"
-import Error from "../pages/Error"
+import Home, { HomePage } from "../pages/HomePage"
 import Navbar from "@/components/layout/Navbar"
-// import Category from "../components/ui/Category"
-import ProductDetails from "@/pages/ProductDetails"
 import Products from "../components/ui/Products"
-import Register from "@/pages/Register"
-import { LoginUser } from "@/pages/LoginUser"
 import UserDashboard from "@/pages/UserDashboard"
 import AdminDashboard from "@/pages/admin/AdminDashboard"
-import UserProfile from "@/pages/UserProfile"
-import UserOrder from "@/pages/UserOrder"
 import ProductsMangement from "@/pages/admin/ProductsMangement"
 import OrdersManagement from "@/pages/admin/OrdersManagement"
 import UsersManagement from "@/pages/admin/UsersManagement"
@@ -25,6 +16,12 @@ import ContactPage from "../pages/ContactPage"
 import AboutPage from "../pages/AboutPage"
 import CategoryPage from "@/pages/CategoryPage"
 import CartPage from "@/pages/CartPage"
+import RegisterPage from "@/pages/RegisterPage"
+import UserProfilePage from "@/pages/UserProfilePage"
+import UserOrderPage from "@/pages/UserOrderPage"
+import ErrorPage from "../pages/ErrorPage"
+import ProductDetailsPage from "@/pages/ProductDetailsPage"
+import { LoginPage } from "@/pages/LoginPage"
 
 
 
@@ -33,12 +30,12 @@ const Index = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/login" element={<LoginUser />} />
-        <Route path="/products/:productID" element={<ProductDetails />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/products/:productID" element={<ProductDetailsPage />} />
         <Route path="/category/:categoryId" element={<CategoryPage/>} />
     
 
@@ -56,15 +53,15 @@ const Index = () => {
         {/* Protected Route with a common path */}
         <Route path="/dashboard"element={<ProtectedRoute/>}>
            <Route path="user" element={<UserDashboard/>}/>
-           <Route path="user/profile" element={<UserProfile />}/>
-           <Route path="user/orders" element={<UserOrder />}/>
+           <Route path="user/profile" element={<UserProfilePage />}/>
+           <Route path="user/orders" element={<UserOrderPage />}/>
         </Route>
 
        
 
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   )

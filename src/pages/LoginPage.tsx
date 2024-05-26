@@ -34,7 +34,7 @@ function Copyright(props: any) {
   )
 }
 
-export function LoginUser() {
+export function LoginPage() {
   
   const dispatch: AppDispatch = useDispatch()
   //after registration navigate to Login page

@@ -7,7 +7,7 @@ import "@/util/App.css"
 import { Link } from "react-router-dom"
 import Products from "@/components/ui/Products"
 
-export const Home = () => {
+export const HomePage = () => {
   return (
     <ThemeProvider theme={muiTheme}>
       <Container>
@@ -37,4 +37,4 @@ export const Home = () => {
     </ThemeProvider>
   )
 }
-export default Home
+export default HomePage

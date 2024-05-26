@@ -32,6 +32,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import muiTheme from "@/util/muiTheme";
 import useUserState from "@/hooks/useUserState";
 import { blockUnblockUser, fetchUsers } from "@/services/toolkit/slices/userSlice";
+import { toast } from "react-toastify";
 
 const UsersManagement = () => {
   const { users, isLoading, error, totalPages } = useUserState();
@@ -46,13 +47,14 @@ const UsersManagement = () => {
     dispatch(fetchUsers({ pageNumber, pageSize, keyword, sortBy }));
   }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const handleBan = async (userId: string, isBanned: boolean) => {
-    console.log(`handleBan called with userId: ${userId} and isBanned: ${isBanned}`);
+  const handleBan = async (userID: string) => {
+    console.log(`handleBan called with userId: ${userID}`);
     try {
-      await dispatch(blockUnblockUser({ userId, isBanned }));
+      userID && await dispatch(blockUnblockUser(userID));
+      toast.success("User Ban Status Updated!")
     } catch (err) {
+      toast.error("Couldn't update user status")
       console.error("Failed to block/unblock user", err);
     }
   };
@@ -143,7 +145,7 @@ const UsersManagement = () => {
                 {users &&
                   users.length > 0 &&
                   users.map((user) => (
-                    <StyledTableRow key={user.userId}>
+                    <StyledTableRow key={user.userID}>
                       <TableCell>{user.username}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.address}</TableCell>
@@ -152,9 +154,10 @@ const UsersManagement = () => {
                       <TableCell>
                         <Button color="warning"
                           onClick={() => {
-                            if (user.userId) {
-                              console.log(`Button clicked for userId: ${user.userId}`);
-                              handleBan(user.userId, !user.isBanned);
+                            console.log("User object:", user.userID); 
+                            if (user.userID) {
+                              console.log(`Button clicked for userId: ${user.userID}`);
+                              handleBan(user.userID);
                             } else {
                               console.warn("userId is undefined");
                             }
@@ -162,7 +165,7 @@ const UsersManagement = () => {
                         >
                           {user.isBanned ? "Unblock User" : "Block User"}
                         </Button>
-                        <Button color="error"> Delete User</Button>
+                        
                       </TableCell>
                     </StyledTableRow>
                   ))}

@@ -69,12 +69,12 @@ export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData
 //Update user info
 export const updateUser = createAsyncThunk(
   "userSlice/updateUser",
-  async ({ updateUserData, userId }: { updateUserData: UpdateUserProfile, userId: string | undefined }) => {
-    if (!userId) {
+  async ({ updateUserData, userID }: { updateUserData: UpdateUserProfile, userID: string | undefined }) => {
+    if (!userID) {
       throw new Error("User ID is undefined"); 
     }
     const token = getToken();
-    const response = await api.put(`/account/my-profile/update/${userId}`, updateUserData, 
+    const response = await api.put(`/account/my-profile/update/${userID}`, updateUserData, 
     {headers: { Authorization: `Bearer ${token}`}}); //passing the token 
     console.log(response.data.message);
     return response.data;
@@ -83,14 +83,14 @@ export const updateUser = createAsyncThunk(
 // Block/Unblock user action
 export const blockUnblockUser = createAsyncThunk(
   "users/blockUnblockUser",
-  async ({ userId, isBanned }: { userId: string; isBanned: boolean }) => {
-    const response = await api.put('/api/account/my-profile/update', {
-      userId,
-      isBanned,
-    });
-    return response.data;
+  async (userID: string) => {
+    const response = await api.put(`/users/banUnban/${userID}`, {} ,{
+      headers: { Authorization: `Bearer ${getToken()}`}
+    })
+    return response.data
   }
 );
+
 
 //cases: pending, fulfilling, rejected
 const userSlice = createSlice({
@@ -135,10 +135,13 @@ const userSlice = createSlice({
       state.isLoading = false
     })
     //Block/unblock user
-    builder.addCase(blockUnblockUser.fulfilled, (state, action: PayloadAction<User>) => {
-      const index = state.users.findIndex((user) => user.userId === action.payload.userId);
-      if (index !== -1) {
-        state.users[index] = action.payload;
+    builder.addCase(blockUnblockUser.fulfilled, (state, action) => {
+      const foundUser = state.users.find((user) => user.userID === action.payload.data.userID);
+      if (foundUser) {
+        foundUser.isBanned = action.payload.data.isBanned
+        state.isLoading = false
+
+       
       }
     });
     builder.addMatcher(

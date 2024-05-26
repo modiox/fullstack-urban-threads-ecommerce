@@ -11,7 +11,7 @@ import { Product } from '@/types'
 
 
 
-const ProductDetails = () => {
+const ProductDetailsPage = () => {
 
      const { product, isLoading, error } = useSelector((state: RootState) => state.productR)
 
@@ -85,4 +85,4 @@ const ProductDetails = () => {
 
 }
 
-export default ProductDetails
+export default ProductDetailsPage

@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+
 
 export type Product = {
   price: number
@@ -43,7 +43,7 @@ export type CartState = {
 
 
 export type User = {
-  userId?: string
+  userID?: string
   firstName: string
   lastName: string
   email: string

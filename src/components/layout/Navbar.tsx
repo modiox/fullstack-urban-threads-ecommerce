@@ -109,7 +109,7 @@ const Navbar = () => {
           to="/"
           style={{ textDecoration: "none", color: "inherit" }}
         >
-        <ListItemText primary="Home" />
+        <ListItemText primary="Home"/>
         </ListItem>
         <ListItem
           button

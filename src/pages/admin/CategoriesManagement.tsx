@@ -40,7 +40,6 @@ const CategoriesManagement = () => {
 
   useEffect(() => {
     dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy }));
-    console.log("Total Pages:", totalPages); //It doesn't get printed? 
   }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);

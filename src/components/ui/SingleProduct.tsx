@@ -5,11 +5,19 @@ import { ThemeProvider } from "@emotion/react";
 import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CardContent } from "./card";
-// import { Storage } from "aws-amplify";
+import { Storage } from "aws-amplify";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/services/toolkit/store";
+import { addToCart } from "@/services/toolkit/slices/cartSlice";
 
 
-const SingleProduct = (props: { product:Product  }) => {
-  const {product} = props; 
+interface Props {
+  product: Product;
+  categoryID: string; 
+}
+
+const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
+ // const {product} = props; 
   const [showFullDescription, setShowFullDescription] = useState(false)
   const [imageUrls, setImageUrls] = useState<string[]>([])
 
@@ -28,37 +36,13 @@ const SingleProduct = (props: { product:Product  }) => {
   //   fetchImageUrl()
   // }, [product.image])
 
+  const dispatch:AppDispatch = useDispatch()
   
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product))
 
-   const toggleDescription = () => {
-     setShowFullDescription(!showFullDescription)
-   }
-
-   const getDescription = () => {
-     if (showFullDescription) {
-       return (
-         <>
-           {product.description}
-           <span onClick={toggleDescription} style={{ color: "blue", cursor: "pointer" }}>
-             See Less
-           </span>
-         </>
-       )
-     } else {
-       return (
-         <>
-           {product.description.length > 100
-             ? product.description.substring(0, 100) + "..."
-             : product.description}
-           {product.description.length > 100 && (
-             <span onClick={toggleDescription} style={{ color: "blue", cursor: "pointer" }}>
-               See More
-             </span>
-           )}
-         </>
-       )
-     }
-   }
+  }
+ 
  
   return (
     <ThemeProvider theme={muiTheme}>
@@ -86,14 +70,14 @@ const SingleProduct = (props: { product:Product  }) => {
         <CardContent>
           <Button
             variant="contained"
-            color="secondary"
-            sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px" }}
-            size="small" 
+            color="primary"
+            sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px", color: "secondary.light" }}
+            size="small" onClick={() => {handleAddToCart(product)}}
           >
             Add To Cart
           </Button>
           <Link to={`/products/${product.productID}`} style={{ textDecoration: "none" }}>
-            <Button variant="contained" color="secondary" size="small">
+            <Button variant="contained" color="primary" size="small" sx ={{color: "secondary.light"}}>
               Show Details
             </Button>
           </Link>

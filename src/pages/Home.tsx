@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { Button, Container, ThemeProvider, Typography } from "@mui/material"
 import "@/util/App.css"
 import { Link } from "react-router-dom"
+import Products from "@/components/ui/Products"
 
 export const Home = () => {
   return (
@@ -24,12 +25,11 @@ export const Home = () => {
           >
             <div>
               <TitlePage title="Home" />
-              <img src={"Logo.png"} alt="Logo" style={{ height: "500px", marginRight: "20px" }} />
-              <h3> URBAN THREADS</h3>
-              <Link to={"/products"}>
+              <img src={"Logo.png"} alt="Logo" style={{ height: "300px", marginRight: "20px" }} />
+              {/* <Link to={"/products"}>
                 <Button color="primary" size="large"> SHOP NOW</Button>
-              </Link>
-              <div> </div>
+              </Link> */}
+              <div> <Products/> </div>
             </div>
           </div>
         </Typography>

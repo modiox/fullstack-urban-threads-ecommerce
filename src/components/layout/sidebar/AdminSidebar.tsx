@@ -54,7 +54,7 @@ export const AdminSidebar = () => {
                   underline="none"
                   sx={{ width: "100%" }}
                 >
-                  UsersOrders
+                  Users' Orders
                 </MuiLink>
               </ListItem>
               <ListItem>

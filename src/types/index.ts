@@ -37,6 +37,9 @@ export type ProductState = {
   error: null | string
   isLoading: boolean
 }
+export type CartState = {
+ cartItems: Product[]
+}
 
 
 export type User = {

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import {
   AppBar,
@@ -24,10 +24,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch, RootState } from "@/services/toolkit/store"
 import { logoutUser } from "@/services/toolkit/slices/userSlice"
 import { ShoppingCartIcon } from "lucide-react"
+import useCategoryState from "@/hooks/useCategoryState"
+import { fetchCategories } from "@/services/toolkit/slices/categorySlice"
+import useUserState from "@/hooks/useUserState"
+import useCartState from "@/hooks/useCartState"
+import { selectCartItemCount } from "@/services/toolkit/slices/cartSlice";
+
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+
+
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -40,10 +48,29 @@ const Navbar = () => {
   //const {isLoggedIn} = useSelector((state:RootState)=> state.userR) 
   const isLoggedIn = useSelector((state: RootState) => state.userR.isLoggedIn);
   const isAdmin = useSelector((state: RootState) => state.userR.isAdmin);
+  const cart = useSelector((state: RootState) => state.cartR);
+  const { categories, isLoading, error, totalPages } = useCategoryState();
+
+  const cartItemCount = useSelector(selectCartItemCount);
+
+
+
 
   const dispatch:AppDispatch = useDispatch()
   const handleLogout = () => { 
     dispatch(logoutUser()) }
+
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(3);
+    const [keyword, setSearchKeyword] = useState("");
+    const [sortBy, setSortBy] = useState("keyword");
+    //const {isLoggedIn, userData} = useUserState()
+    const {cartItems} = useCartState()
+
+    useEffect(() => {
+      dispatch(fetchCategories({ pageNumber, pageSize, keyword, sortBy }));
+    }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
+  
 
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -89,7 +116,7 @@ const Navbar = () => {
           component={Link}
           to="/products"
           style={{ textDecoration: "none", color: "inherit" }}
-        >
+          >
           <ListItemText primary="Shop" />
         </ListItem>
       
@@ -118,7 +145,7 @@ const Navbar = () => {
           sx={{color:"secondary.light"}}
         >
           <IconButton aria-label="cart">
-           <StyledBadge badgeContent={2} sx={{color:"secondary.main"}}> 
+           <StyledBadge badgeContent={cartItemCount} sx={{color:"secondary.main"}}> 
            {/* Will change the badgecontent to reflect the actual number of items in a cart */}
             <ShoppingCartIcon />
             </StyledBadge>
@@ -129,9 +156,6 @@ const Navbar = () => {
 
         {isLoggedIn && (
           <>
-           {/* <ListItem button component={Link} to={isAdmin ? "/dashboard/admin" : "/dashboard/user"}>
-            <ListItemText primary="Dashboard" />
-           </ListItem> */}
             <ListItem style={navItemStyle}>
               <Link
                 to="/"
@@ -207,34 +231,27 @@ const Navbar = () => {
                         Shop
                       </Button>
                     )}
-                    <Menu
-                      anchorEl={anchorEl}
-                      open={Boolean(anchorEl)}
-                      onClose={handleMenuClose}
-                      MenuListProps={{ onMouseLeave: handleMenuClose }}
-                    >
-                      <MenuItem component={Link} to="/category/1" onClick={handleMenuClose}>
-                        New Arrival
-                      </MenuItem>
-                      <MenuItem component={Link} to="/category/2" onClick={handleMenuClose}>
-                        Tops
-                      </MenuItem>
-                      <MenuItem component={Link} to="/category/3" onClick={handleMenuClose}>
-                        Outwear
-                      </MenuItem>
-                      <MenuItem component={Link} to="/category/4" onClick={handleMenuClose}>
-                        Accessories
-                      </MenuItem>
-                      <MenuItem component={Link} to="/products" onClick={handleMenuClose}>
-                        Shop All
-                      </MenuItem>
-                    </Menu>
+                   <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose}
+      MenuListProps={{ onMouseLeave: handleMenuClose }}
+    >
+      {categories.map(category => (
+        <MenuItem
+          key={category.categoryID} 
+          component={Link}
+          to={`/category/${category.categoryID}`} 
+          onClick={handleMenuClose}
+        >
+          {category.name} 
+        </MenuItem>
+      ))}
+      <MenuItem component={Link} to="/products" onClick={handleMenuClose}>
+        Shop All
+      </MenuItem>
+    </Menu>
                   </div>
-                  {/* <li style={navItemStyle}>
-                    <Link to="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
-                      Dashboard
-                    </Link>
-                  </li> */}
                   <li style={navItemStyle}>
                     <Link to="/register" style={{ textDecoration: "none", color: "inherit" }}>
                       Register
@@ -287,8 +304,7 @@ const Navbar = () => {
           sx={{color:"secondary.main"}}
         >
           <IconButton aria-label="cart">
-           <StyledBadge badgeContent={2} sx={{color:"primary.light"}}> 
-           {/* Will change the badgecontent to reflect the actual number of items in a cart */}
+           <StyledBadge badgeContent={cartItemCount} sx={{color:"primary.light"}} > 
             <ShoppingCartIcon />
             </StyledBadge>
             </IconButton>

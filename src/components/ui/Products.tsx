@@ -124,7 +124,7 @@ const Products = () => {
               products.length > 0 &&
               products.map((product: Product) => (
                 <Grid item xs={12} sm={6} md={4} key={product.productID}>
-                  <SingleProduct product={product} />
+                  <SingleProduct product={product} categoryID={""} />
                 </Grid>
               ))}
           </Grid>

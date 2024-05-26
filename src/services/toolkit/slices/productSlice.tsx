@@ -82,8 +82,6 @@ export const sortProducts = createAsyncThunk(
      return response.data 
   } )
 
-//http://localhost:5343/api/products/search?keyword=urban&isAscending=true&page=1&pageSize=3
-
 export const fetchProductsById = createAsyncThunk("products/fetchProductsById", async (productID: string | undefined) => {
   const response = await api.get(`/products/post/${productID}`)
    console.log(response.data)
@@ -115,8 +113,7 @@ export const deleteProduct = createAsyncThunk(
   }
 ) 
 
-
-//update/edit category
+//Update/edit product
 export const updateProduct = createAsyncThunk(
   "products/updateProducts",
   async (product: Product) => {

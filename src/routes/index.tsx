@@ -2,8 +2,8 @@ import React from "react"
 
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "../pages/Home"
-import About from "../pages/About"
-import Contact from "../pages/Contact"
+import About from "../pages/AboutPage"
+import Contact from "../pages/ContactPage"
 import Error from "../pages/Error"
 import Navbar from "@/components/layout/Navbar"
 // import Category from "../components/ui/Category"
@@ -21,6 +21,10 @@ import UsersManagement from "@/pages/admin/UsersManagement"
 import CategoriesManagement from "@/pages/admin/CategoriesManagement"
 import ProtectedRoute from "@/routes"
 import AdminRoute from "./AdminRoute"
+import ContactPage from "../pages/ContactPage"
+import AboutPage from "../pages/AboutPage"
+import CategoryPage from "@/pages/CategoryPage"
+import CartPage from "@/pages/CartPage"
 
 
 
@@ -31,10 +35,11 @@ const Index = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginUser />} />
         <Route path="/products/:productID" element={<ProductDetails />} />
+        <Route path="/category/:categoryId" element={<CategoryPage/>} />
     
 
         {/* admin routes */}
@@ -47,16 +52,18 @@ const Index = () => {
            <Route path="admin/categories" element={<CategoriesManagement />} />
          </Route>
 
-          {/* user routes */}
+        {/* user routes */}
         {/* Protected Route with a common path */}
-        <Route path="/dashboard"element={<ProtectedRoute/>} >
-           <Route path="user" element={<UserDashboard/>} />
-           <Route path="user/profile" element={<UserProfile />} />
-           <Route path="user/orders" element={<UserOrder />} />
+        <Route path="/dashboard"element={<ProtectedRoute/>}>
+           <Route path="user" element={<UserDashboard/>}/>
+           <Route path="user/profile" element={<UserProfile />}/>
+           <Route path="user/orders" element={<UserOrder />}/>
         </Route>
+
        
 
         <Route path="/register" element={<Register />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

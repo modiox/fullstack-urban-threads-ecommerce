@@ -2,7 +2,7 @@ import { Product } from "@/types"
 import { Link } from "react-router-dom";
 import muiTheme from "@/util/muiTheme";
 import { ThemeProvider } from "@emotion/react";
-import { Box, Button, Card, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardActions, CardMedia, Container, Grid, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CardContent } from "./card";
 import { Storage } from "aws-amplify";
@@ -21,20 +21,20 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
   const [showFullDescription, setShowFullDescription] = useState(false)
   const [imageUrls, setImageUrls] = useState<string[]>([])
 
-  // useEffect(() => {
-  //   const fetchImageUrl = async () => {
-  //     try {
-  //       if (product.image && product.image.length > 0) {
-  //          const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
-  //         setImageUrls(urls)
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching image from S3:", error)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      try {
+        if (product.image && product.image.length > 0) {
+           const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
+          setImageUrls(urls)
+        }
+      } catch (error) {
+        console.error("Error fetching image from S3:", error)
+      }
+    }
 
-  //   fetchImageUrl()
-  // }, [product.image])
+    fetchImageUrl()
+  }, [product.image])
 
   const dispatch:AppDispatch = useDispatch()
   
@@ -46,43 +46,69 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
  
   return (
     <ThemeProvider theme={muiTheme}>
-      <Card sx={{ maxWidth: 345, m: 2 }}>
-        <Box>
+      <Grid container spacing={2}>
+     
           {imageUrls.map((url, index) => (
             <CardMedia
               key={index}
               component="img"
-              height="150"
+              height="200"
               image={url} // Use the fetched S3 image URL
               alt={`${product.productName} image ${index + 1}`}
               sx={{ mb: 1 }} //
             />
           ))}
-        </Box>
+      
+        </Grid>
+  
+      <Container sx={{ mt: 5 }}>
+        {/* <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Card>
+              {imageUrls.map((url, index) => (
+                <CardMedia
+                  key={index}
+                  component="img"
+                  height="200"
+                  image={url}
+                  alt={`${product.productName} image ${index + 1}`}
+                  sx={{ mb: 1 }}
+                />
+              ))}
+            </Card>
+          </Grid> */}
+        <Card> 
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography gutterBottom variant="h5" component="div">
             {product.productName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Price: ${product.price?.toLocaleString("en-US")}
           </Typography>
         </CardContent>
-        <CardContent>
+        <CardActionArea>
+          <CardActions> 
           <Button
             variant="contained"
             color="primary"
-            sx={{ margin: "30px", marginRight: "10px", marginLeft: "10px", color: "secondary.light" }}
+            sx={{ margin: "40px", marginRight: "25px", marginLeft: "25px", color: "secondary" }}
             size="small" onClick={() => {handleAddToCart(product)}}
           >
             Add To Cart
           </Button>
           <Link to={`/products/${product.productID}`} style={{ textDecoration: "none" }}>
-            <Button variant="contained" color="primary" size="small" sx ={{color: "secondary.light"}}>
+            <Button variant="contained" color="primary" size="small" sx ={{color: "secondary"}}>
               Show Details
             </Button>
           </Link>
-        </CardContent>
+
+          </CardActions>
+          
+        </CardActionArea>
       </Card>
+
+      </Container> 
+        
     </ThemeProvider>
   )
 }

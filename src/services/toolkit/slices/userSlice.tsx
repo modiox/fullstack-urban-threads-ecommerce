@@ -74,10 +74,10 @@ export const updateUser = createAsyncThunk(
       throw new Error("User ID is undefined"); 
     }
     const token = getToken();
-    const response = await api.put(`/account/my-profile/update/${userID}`, updateUserData, 
+    const response = await api.put(`/account/my-profile/update/`,  { ...updateUserData, userID }, 
     {headers: { Authorization: `Bearer ${token}`}}); //passing the token 
-    console.log(response.data.message);
-    return response.data;
+    console.log(response.data.data);
+    return response.data.data;
   }
 );
 // Block/Unblock user action
@@ -117,16 +117,22 @@ const userSlice = createSlice({
         token: state.token })
     })
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      console.log(action.payload)
       if (state.userData) {
-        state.userData.firstName = action.payload.data.firstName
-        state.userData.lastName = action.payload.data.lastName 
-        state.userData.address = action.payload.data.address
-        setLocalStorage("loginData", {isLoggedIn: state.isLoggedIn,
-          userData: state.userData,
-          token: state.token })
+        const updatedUserData = {
+          ...state.userData,
+          firstName: action.payload.data.firstName,
+          lastName: action.payload.data.lastName,
+          address: action.payload.data.address,
+          email: action.payload.data.email,
+        };
+        state.userData = updatedUserData;
+        setLocalStorage("loginData", {
+          isLoggedIn: state.isLoggedIn,
+          userData: updatedUserData,
+          token: state.token,
+        });
       }
-    })
+    });
     //fetch users 
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload.data

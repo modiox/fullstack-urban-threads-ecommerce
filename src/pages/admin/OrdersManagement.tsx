@@ -48,15 +48,7 @@ const OrdersManagement = () => {
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const handleBan = async (userId: string, isBanned: boolean) => {
-    console.log(`handleBan called with userId: ${userId} and isBanned: ${isBanned}`);
-    try {
-      await dispatch(blockUnblockUser({ userId, isBanned }));
-    } catch (err) {
-      console.error("Failed to block/unblock user", err);
-    }
-  };
-
+  
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1);
   };
@@ -143,27 +135,12 @@ const OrdersManagement = () => {
                 {users &&
                   users.length > 0 &&
                   users.map((user) => (
-                    <StyledTableRow key={user.userId}>
+                    <StyledTableRow key={user.userID}>
                       <TableCell>{user.username}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.address}</TableCell>
                       <TableCell>{user.isBanned ? "Yes" : "No"}</TableCell>
                       <TableCell>{user.isAdmin ? "Yes" : "No"}</TableCell>
-                      <TableCell>
-                        <Button color="warning"
-                          onClick={() => {
-                            if (user.userId) {
-                              console.log(`Button clicked for userId: ${user.userId}`);
-                              handleBan(user.userId, !user.isBanned);
-                            } else {
-                              console.warn("userId is undefined");
-                            }
-                          }}
-                        >
-                          {user.isBanned ? "Unblock User" : "Block User"}
-                        </Button>
-                        <Button color="error"> Delete User</Button>
-                      </TableCell>
                     </StyledTableRow>
                   ))}
               </TableBody>

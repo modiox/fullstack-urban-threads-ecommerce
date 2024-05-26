@@ -14,8 +14,9 @@ const selectCartItemCount = createSelector(
     (cartItems) => cartItems.reduce((total, item) => total + item.quantity, 0)
   );
 
-type CartState = {
-    cartItems: Product[]
+export type CartItem = Product & {quantity: number}
+export type CartState = {
+    cartItems: CartItem[]
 }
 
 const initialState: CartState = {
@@ -52,12 +53,15 @@ const cartSlice = createSlice({
         const itemIndex = state.cartItems.findIndex(item => item.productID === action.payload);
         if (itemIndex >= 0) {
           state.cartItems[itemIndex].quantity += 1;
+          setLocalStorage("cartItems", state.cartItems);
         }
+
       },
       decreaseQuantity: (state, action: PayloadAction<string>) => {
         const itemIndex = state.cartItems.findIndex(item => item.productID === action.payload);
         if (itemIndex >= 0 && state.cartItems[itemIndex].quantity > 1) {
           state.cartItems[itemIndex].quantity -= 1;
+          setLocalStorage("cartItems", state.cartItems);
         } else {
           state.cartItems = state.cartItems.filter(item => item.productID !== action.payload);
         }

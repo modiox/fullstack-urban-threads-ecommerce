@@ -43,25 +43,26 @@ const UserProfile: React.FC = () => {
 
   const onSubmit: SubmitHandler<UpdateUserProfile> = async (data) => {
     try {
-      const res = await dispatch(updateUser({ updateUserData: data, userId: userData?.userId }));
+      const res = await dispatch(updateUser({ updateUserData: data, userID: userData?.userID }));
       console.log(res);
     } catch (error) {
-      console.log(error);
+      console.error("Error updating user:", error);
     }
   };
+  
 
-  const Copyright = (props: any) => (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/"></Link> {new Date().getFullYear()}
-    </Typography>
-  );
 
   return (
-    <div>
+    <div   className="product-container"
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      minHeight: "80vh",
+      margin: 70 }}>
       <UserSidebar />
       <div>
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 10, bgcolor: "secondary" }}>
           <LockOutlinedIcon />
         </Avatar>
         {userData && (
@@ -164,26 +165,13 @@ const UserProfile: React.FC = () => {
                             )}
                           />
                         </Grid>
-                        <Grid item xs={12}>
-                          <Controller
-                            name="allowExtraEmails"
-                            control={control}
-                            defaultValue={false}
-                            render={({ field }) => (
-                              <FormControlLabel
-                                control={<Checkbox {...field} color="primary" />}
-                                label="I want to receive fashion inspiration and updates via email."
-                              />
-                            )}
-                          />
-                        </Grid>
                       </Grid>
                       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                         Save Changes
                       </Button>
                     </Box>
                   </Box>
-                  <Copyright sx={{ mt: 5 }} />
+              
                 </Container>
               </ThemeProvider>
             )}

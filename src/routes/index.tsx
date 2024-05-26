@@ -22,6 +22,7 @@ import UserOrderPage from "@/pages/UserOrderPage"
 import ErrorPage from "../pages/ErrorPage"
 import ProductDetailsPage from "@/pages/ProductDetailsPage"
 import { LoginPage } from "@/pages/LoginPage"
+import { Config } from "aws-sdk"
 
 
 
@@ -37,7 +38,8 @@ const Index = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/products/:productID" element={<ProductDetailsPage />} />
         <Route path="/category/:categoryId" element={<CategoryPage/>} />
-    
+
+
 
         {/* admin routes */}
         {/* Protected route with common path */}
@@ -48,14 +50,17 @@ const Index = () => {
            <Route path="admin/users" element={<UsersManagement />} />
            <Route path="admin/categories" element={<CategoriesManagement />} />
          </Route>
-
-        {/* user routes */}
-        {/* Protected Route with a common path */}
-        <Route path="/dashboard"element={<ProtectedRoute/>}>
-           <Route path="user" element={<UserDashboard/>}/>
-           <Route path="user/profile" element={<UserProfilePage />}/>
-           <Route path="user/orders" element={<UserOrderPage />}/>
-        </Route>
+         
+         
+         <Route path="/dashboard" element={<ProtectedRoute/>} />
+         <Route path="/dashboard/user" element={<UserDashboard/>}/>
+         <Route path="/dashboard/user/profile" element={<UserProfilePage />}/>
+         <Route path="/dashboard/user/orders" element={<UserOrderPage />}/>
+         {/* <Route path="/dashboard" element={<ProtectedRoute />}>
+          <Route index element={<UserDashboard />} />
+          <Route path="profile" element={<UserProfilePage />} />
+          <Route path="orders" element={<UserOrderPage />} />
+          </Route> */}
 
        
 

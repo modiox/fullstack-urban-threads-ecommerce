@@ -6,6 +6,7 @@ import { Link, ThemeProvider } from "react-admin"
 import muiTheme from "@/util/muiTheme"
 import { UserSidebar } from "@/components/layout/sidebar/UserSidebar"
 import { AppDispatch } from "@/services/toolkit/store"
+import TitlePage from "@/components/ui/TitlePage"
 
  const UserDashboard: React.FC = () => {
   const dispatch:AppDispatch = useDispatch()
@@ -13,14 +14,22 @@ import { AppDispatch } from "@/services/toolkit/store"
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Box sx={{ padding: "100px", alignContent: "center" }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Welcome to your dashboard!
-          <UserSidebar/>
-          {/* Main content here */}
-        </Typography>
-      </Box>
-    </ThemeProvider>
+    <TitlePage title="User Dashboard" /> 
+   <div
+      className="product-container"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        minHeight: "80vh",
+        margin: 70
+      }} >
+      <Typography variant="h5" component="div" sx={{ my: 2 }}>
+      </Typography>
+      <UserSidebar />
+
+    </div>
+  </ThemeProvider>
   )
 }
 

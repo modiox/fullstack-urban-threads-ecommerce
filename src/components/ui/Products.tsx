@@ -75,7 +75,7 @@ const Products = () => {
           position: 'relative',
           textAlign: 'center',
           py: 20,
-          background: `url('wallpaper.png') no-repeat center center`,
+          background: `url('img/wallpaper.png') no-repeat center center`,
           backgroundSize: 'cover',
           color: 'primary.contrastText',
           '&:before': {

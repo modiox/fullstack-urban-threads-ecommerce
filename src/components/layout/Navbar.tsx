@@ -146,7 +146,6 @@ const Navbar = () => {
         >
           <IconButton aria-label="cart">
            <StyledBadge badgeContent={cartItemCount} sx={{color:"secondary.main"}}> 
-           {/* Will change the badgecontent to reflect the actual number of items in a cart */}
             <ShoppingCartIcon />
             </StyledBadge>
             </IconButton>
@@ -191,7 +190,7 @@ const Navbar = () => {
       <AppBar position="fixed">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <img
-            src={"Logo.png"}
+            src={"img/Logo.png"}
             alt="Logo"
             style={{ height: "100px", width: "100px", marginRight: "20px" }}
           />

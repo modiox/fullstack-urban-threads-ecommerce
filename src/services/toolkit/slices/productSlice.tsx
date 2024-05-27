@@ -4,6 +4,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { getToken } from "@/util/localStorage";
 
+
+
 //type definition of the initialState
 
 const initialState: ProductState = { 
@@ -189,7 +191,7 @@ const productSlice = createSlice({
    
     }) 
 
-    // Create products
+    // Delete products
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.products = state.products.filter(
         (product) => product.productID !== action.payload

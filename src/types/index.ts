@@ -1,12 +1,12 @@
 
-
 export type Product = {
-  price: number
   productID: string
   productName: string
   image: []
+  price: number
   description: string
   quantity: number
+  categoryID: string 
   categories: Category[]
   createdAt: string
 }
@@ -37,6 +37,8 @@ export type ProductState = {
   error: null | string
   isLoading: boolean
 }
+
+
 export type CartState = {
  cartItems: Product[]
 }
@@ -111,7 +113,7 @@ export type CreateProductFormData = {
   productName: string 
   price: number 
   description: string 
-  catergoryID: string 
+  categoryID: string 
   quantity: number 
 
 

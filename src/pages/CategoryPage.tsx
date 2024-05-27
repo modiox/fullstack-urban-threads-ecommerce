@@ -8,7 +8,7 @@ const CategoryPage = () => {
   return (
     <div>
       <h1>Category {categoryID}</h1>
-      <SingleProduct categoryID={categoryID} />
+      {/* <SingleProduct categoryID={categoryID} /> */}
     </div>
   )
 }

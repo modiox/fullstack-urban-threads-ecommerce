@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/services/toolkit/store";
-import { Product } from "@/types";
+import { Product, CreateProductFormData } from "@/types";
 import {
   Box,
   Button,
@@ -33,14 +33,6 @@ import { fetchProducts, createProduct, updateProduct, deleteProduct, searchProdu
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { fetchCategories } from "@/services/toolkit/slices/categorySlice";
 
-// Define the CreateProductFormData type
-type CreateProductFormData = {
-  productName: string;
-  description: string;
-  price: number;
-  quantity: number;
-  categoryID: string
-};
 
 const ProductsManagement = () => {
   const { products, isLoading, error, totalPages } = useProductState() as { products: Product[]; isLoading: boolean; error: string; totalPages: number };
@@ -120,10 +112,10 @@ const ProductsManagement = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
   };
-  const handleSearchClick = async (e: SelectChangeEvent<string>) => {
-    await dispatch(searchProducts({ pageNumber, pageSize, keyword, isAscending, sortBy }))
   
-      setAscending("true") 
+  const handleSearchClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    await dispatch(searchProducts({ pageNumber, pageSize, keyword, isAscending, sortBy }));
+    setAscending("true");
   };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({

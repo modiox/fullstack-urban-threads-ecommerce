@@ -38,7 +38,7 @@ const CartPage = () => {
   }, [dispatch]);
 
   const handleCreateOrder = (productID: string) => {
-    dispatch(createOrder({productID, paymentMethod: 'Credit Card' }))
+    dispatch(createOrder({productID, paymentMethod: 1 }))
       .then(() => {
         toast.success('Order placed successfully!');
         dispatch(removeAllFromCart()); 
@@ -102,11 +102,13 @@ const CartPage = () => {
               >
                 Place Order
               </Button> */} 
-              
+
                     </CardContent>
                   </Card>
                 </Grid>
-              ))}
+              ))
+              
+              }
             </Grid>
             <Typography variant="h6">Summary</Typography>
             <Typography variant="body1">Total Price: ${cartTotal().toFixed(2)}</Typography>
@@ -116,8 +118,9 @@ const CartPage = () => {
                 <Button variant="contained" sx={{ mt: 2, mr: 2 }}>
                   Edit Address
                 </Button>
-                <Button variant="contained" sx={{ mt: 2 }} onClick={() => handleCreateOrder(cartItem.productID)}>
+                <Button variant="contained" sx={{ mt: 2 }}>
                   Place Order
+                  {/* onClick={() => handleCreateOrder(cartItem.productID)} */}
                 </Button>
               </Box>
                   

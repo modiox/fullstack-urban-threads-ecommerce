@@ -121,7 +121,7 @@ export type Order = {
   orderId: string;
   userId: string;
   status: string;
-  paymentMethod: string;
+  paymentMethod: number;
   amount: number;
   products: Product[];
 }

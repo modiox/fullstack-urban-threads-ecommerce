@@ -1,15 +1,36 @@
-
-export type Product = {
-  productID: string
-  productName: string
+export interface Product {
+  productID: string;
+  productName: string;
+  description: string;
+  price: number;
+  quantity: number;
+  categoryID: string;
   image: []
-  price: number
-  description: string
-  quantity: number
-  categoryID: string 
   categories: Category[]
   createdAt: string
 }
+
+export interface ProductState {
+  products: Product[];
+  totalPages: number;
+  product: Product | null;
+  error: string | null;
+  isLoading: boolean;
+}
+
+
+
+// export type Product = {
+//   productID: string
+//   productName: string
+//   image: []
+//   price: number
+//   description: string
+//   quantity: number
+//   categoryID: string 
+//   categories: Category[]
+//   createdAt: string
+// }
 
 export type Category = { 
   categoryID: string
@@ -30,13 +51,13 @@ export type CategoryState = {
   isLoading: boolean
 }
 
-export type ProductState = {
-  products: []
-  totalPages: number 
-  product: Product | null
-  error: null | string
-  isLoading: boolean
-}
+// export type ProductState = {
+//   products: []
+//   totalPages: number 
+//   product: Product | null
+//   error: null | string
+//   isLoading: boolean
+// }
 
 
 export type CartState = {
@@ -115,7 +136,8 @@ export type CreateProductFormData = {
   description: string 
   categoryID: string 
   quantity: number 
-
+  imgUrl?: FileList
+  //category: Category
 
 }
 
@@ -133,5 +155,16 @@ export type OrderState = {
   orderDetails: Order | null;
   isLoading: boolean;
   error: string | null;
+
+}
+
+export type CreateProductForBackend = { 
+  imgUrl?: string 
+  productName: string 
+  price: number 
+  description: string 
+  categoryID: string 
+  quantity: number 
+  
 
 }

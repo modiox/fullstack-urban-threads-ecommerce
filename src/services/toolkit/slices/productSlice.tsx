@@ -1,5 +1,6 @@
 import api from "@/api";
-import { CreateProductFormData, Product, ProductState } from "@/types";
+import { CreateProductFormData, ProductState } from "@/types";
+import { Product } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { getToken } from "@/util/localStorage";
@@ -9,7 +10,7 @@ import { getToken } from "@/util/localStorage";
 //type definition of the initialState
 
 const initialState: ProductState = { 
-    products: [],
+    products:[],
     totalPages: 0,
     product: null,
     error: null,

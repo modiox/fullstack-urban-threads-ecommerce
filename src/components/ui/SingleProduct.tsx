@@ -8,6 +8,7 @@ import { CardContent } from "./card";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/services/toolkit/store";
 import { addToCart } from "@/services/toolkit/slices/cartSlice";
+import { uploadImageToCloudinary } from "@/util/cloudinary"
 
 
 interface Props {
@@ -30,26 +31,11 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
  
   return (
     <ThemeProvider theme={muiTheme}>
-      <Grid container spacing={2}>
-{/*      
-          {imageUrls.map((url, index) => (
-            <CardMedia
-              key={index}
-              component="img"
-              height="200"
-              image={url} 
-              alt={`${product.productName} image ${index + 1}`}
-              sx={{ mb: 1 }} //
-            />
-          ))}
-       */}
-        </Grid>
-  
       <Container sx={{ mt: 5 }}>
-        {/* <Grid container spacing={4}>
+      <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Card>
-              {imageUrls.map((url, index) => (
+              {product.image?.map((url, index) => (
                 <CardMedia
                   key={index}
                   component="img"
@@ -60,7 +46,8 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
                 />
               ))}
             </Card>
-          </Grid> */}
+          </Grid>
+        </Grid>
         <Card> 
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

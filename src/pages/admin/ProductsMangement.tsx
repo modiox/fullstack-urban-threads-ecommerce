@@ -31,11 +31,16 @@ import useProductState from "@/hooks/useProductState";
 import { fetchProducts, createProduct, updateProduct, deleteProduct, searchProducts } from "@/services/toolkit/slices/productSlice";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { fetchCategories } from "@/services/toolkit/slices/categorySlice";
+import { uploadImageToCloudinary } from "@/util/cloudinary";
+import { CreateProductForBackend } from "@/types"
+
 
 
 const ProductsManagement = () => {
   const { products, isLoading, error, totalPages } = useProductState() as { products: Product[]; isLoading: boolean; error: string; totalPages: number };
   const categories = useSelector((state: RootState) => state.categoryR.categories); 
+
+  
 
 
   const dispatch: AppDispatch = useDispatch();
@@ -59,13 +64,10 @@ const ProductsManagement = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [isAscending, setAscending] = useState("")
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CreateProductFormData>();
+  const { register, handleSubmit, control, formState: { errors }, reset } = useForm<CreateProductFormData>();
+
 
   const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
     try {
@@ -73,6 +75,15 @@ const ProductsManagement = () => {
         await dispatch(updateProduct({ ...currentProduct, ...data }));
       } else {
         await dispatch(createProduct(data));
+      }
+      let imageUrl = " "
+      if (data.imgUrl && data.imgUrl.length > 0){ 
+        const file = data.imgUrl[0]
+        imageUrl = await uploadImageToCloudinary(file)
+      }
+      const productData = { 
+        ...data, 
+        imgUrl: imageUrl
       }
       setIsFormOpen(false);
       setIsEdit(false);
@@ -99,6 +110,13 @@ const ProductsManagement = () => {
       console.log(err);
     }
   };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setImagePreview(URL.createObjectURL(file))
+    }
+  }
 
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => Math.max(currentPage - 1, 1));
@@ -234,6 +252,33 @@ const ProductsManagement = () => {
                     />
                   </Grid>
 
+                  <Grid item xs={12}>
+                  {/* Add file input field for image upload */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    {...register("imgUrl", {
+                      required: "Image is required..Please select a file"
+                    })}
+                    onChange={handleImageChange}
+                  />
+                  {errors.imgUrl && (
+                    <Typography variant="body2" color="error">
+                      {errors.imgUrl.message}
+                    </Typography>
+                  )}
+                </Grid>
+                {imagePreview && (
+                                <Grid item xs={12}>
+                                  <img
+                                    className="image-preview"
+                                    width="80px"
+                                    height="80px"
+                                    src={imagePreview}
+                                    alt="imagePreview"
+                                  ></img>
+                                </Grid>
+                              )}
                   <Grid item xs={12}>
                     <Controller
                       name="price"

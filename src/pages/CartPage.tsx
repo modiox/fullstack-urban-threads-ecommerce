@@ -94,14 +94,16 @@ const CartPage = () => {
                         </Box>
                       </Box>
 
-                      {/* <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                onClick={() => handleCreateOrder(cartItem.productID)}
-                disabled={!isLoggedIn}
-              >
-                Place Order
-              </Button> */} 
+                      <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          onClick={() => handleCreateOrder(cartItem.productID)} // Placing order for each cart item
+          disabled={!isLoggedIn}
+        >
+          Place Order
+        </Button>
+
+    
 
                     </CardContent>
                   </Card>
@@ -118,10 +120,10 @@ const CartPage = () => {
                 <Button variant="contained" sx={{ mt: 2, mr: 2 }}>
                   Edit Address
                 </Button>
-                <Button variant="contained" sx={{ mt: 2 }}>
+                {/* <Button variant="contained" sx={{ mt: 2 }}   onClick={() => handleCreateOrder(cartItem.productID)}>
                   Place Order
-                  {/* onClick={() => handleCreateOrder(cartItem.productID)} */}
-                </Button>
+                
+                </Button> */}
               </Box>
                   
             ) : (

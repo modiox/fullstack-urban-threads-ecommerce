@@ -19,19 +19,6 @@ export interface ProductState {
 }
 
 
-
-// export type Product = {
-//   productID: string
-//   productName: string
-//   image: []
-//   price: number
-//   description: string
-//   quantity: number
-//   categoryID: string 
-//   categories: Category[]
-//   createdAt: string
-// }
-
 export type Category = { 
   categoryID: string
   name: string
@@ -66,6 +53,7 @@ export type CartState = {
 
 
 export type User = {
+  paymentMethod?: number;
   userID?: string
   firstName: string
   lastName: string
@@ -77,6 +65,7 @@ export type User = {
   isAdmin?: boolean
   isBanned?: boolean
   createdAt?: string
+  orders?: Order[];
   
 }
 export type UserState = {
@@ -141,18 +130,20 @@ export type CreateProductFormData = {
 
 }
 
+//PaymentMethod { CreditCard = 0, ApplePay = 1, Visa = 2, Cash = 3, PayPal = 4 }
+//OrderStatus { Creating = 0, Pending = 1, Processing = 2, Shipped = 3, Delivered = 4 }
 export type Order = { 
-  orderId: string;
-  userId: string;
-  status: string;
-  paymentMethod: number;
+  orderID: string;
+  userID: string;
+  status?: number;
+  paymentMethod?: number;
   amount: number;
   products: Product[];
 }
 
-export type OrderState = { 
+export interface OrderState  { 
   orders: Order[];
-  orderDetails: Order | null;
+  order: Order
   isLoading: boolean;
   error: string | null;
 

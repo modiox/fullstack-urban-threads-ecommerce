@@ -7,20 +7,21 @@ import { RootState } from '../store';
 // Define the initial state
 interface OrderState {
   orders: Order[];
-  orderDetails: Order | null;
+  order: Order | null;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: OrderState = {
   orders: [],
-  orderDetails: null,
+  order: null,
   isLoading: false,
   error: null,
 };
 
 type PaymentMethod =  1
 //'Credit Card' | 'Debit Card' | 'PayPal' | 'Bank Transfer' | 'Cash';
+//statuses: Creating = 0, Pending = 1, Processing = 2, Shipped = 3, Delivered = 4
 
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
   const response = await api.get('/history/my-orders');
@@ -29,7 +30,7 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
 
 export const createOrder = createAsyncThunk(
   'orders/createOrder',
-  async ({ productID, paymentMethod }: { productID: string; paymentMethod: PaymentMethod }) => {
+  async ({ productID, paymentMethod }: { productID: string; paymentMethod: PaymentMethod;}) => {
     const token = getToken();
     const response = await api.post(`/post/${productID}/create-order`, { paymentMethod }, {
       headers: { Authorization: `Bearer ${token}` }

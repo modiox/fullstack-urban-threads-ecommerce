@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/services/toolkit/store";
-import { Category, CreateCategoryFormData } from "@/types";
+import { Category, CreateCategoryFormData, Order, OrderState } from "@/types";
 import {
   Box,
   Button,
@@ -27,6 +27,7 @@ import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
 import muiTheme from "@/util/muiTheme";
 import useUserState from "@/hooks/useUserState";
 import { fetchUsers } from "@/services/toolkit/slices/userSlice";
+import { fetchOrders } from "@/services/toolkit/slices/orderSlice";
 
 const OrdersManagement = () => {
   const { users, isLoading, error, totalPages } = useUserState();
@@ -38,8 +39,8 @@ const OrdersManagement = () => {
   const [sortBy, setSortBy] = useState("keyword");
 
   useEffect(() => {
-    dispatch(fetchUsers({ pageNumber, pageSize, keyword, sortBy }));
-  }, [dispatch, pageNumber, pageSize, keyword, sortBy]);
+    dispatch(fetchUsers({ pageNumber: 1, pageSize: 10, keyword: '', sortBy: 'name' }));
+  }, [dispatch]);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -88,14 +89,14 @@ const OrdersManagement = () => {
         }}
       >
         <Typography variant="h5" component="div" sx={{ my: 2 }}>
-          Users Management
+          Users' Orders Management
         </Typography>
         <AdminSidebar />
 
         <div style={{ width: "100%", maxWidth: "1200px", padding: "20px", marginTop: "100px" }}>
           <FormControl sx={{ marginBottom: 1, width: "100%" }}>
             <TextField
-              label="Search users"
+              label="Search orders"
               variant="outlined"
               type="text"
               name="search"
@@ -118,27 +119,32 @@ const OrdersManagement = () => {
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
+                  <StyledTableCell>Product</StyledTableCell>
                   <StyledTableCell>Username</StyledTableCell>
-                  <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Address</StyledTableCell>
-                  <StyledTableCell>Is Banned?</StyledTableCell>
-                  <StyledTableCell>Is Admin?</StyledTableCell>
-                  <StyledTableCell>Action</StyledTableCell>
+                  <StyledTableCell>Payment Method</StyledTableCell>
+                  <StyledTableCell>Status</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users &&
-                  users.length > 0 &&
-                  users.map((user) => (
-                    <StyledTableRow key={user.userID}>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.address}</TableCell>
-                      <TableCell>{user.isBanned ? "Yes" : "No"}</TableCell>
-                      <TableCell>{user.isAdmin ? "Yes" : "No"}</TableCell>
-                    </StyledTableRow>
-                  ))}
-              </TableBody>
+      {users.map((user) => (
+        <React.Fragment key={user.userID}>
+          <StyledTableRow>
+            <TableCell>{user.userID}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.address}</TableCell>
+            <TableCell>{user.paymentMethod ? "Yes" : "No"}</TableCell>
+          </StyledTableRow>
+          {user.orders?.map((order) => (
+            <StyledTableRow key={order.orderID}>
+              <TableCell>{order.orderID}</TableCell>
+              <TableCell>{order.status}</TableCell>
+              <TableCell>{order.paymentMethod}</TableCell>
+            </StyledTableRow>
+          ))}
+        </React.Fragment>
+      ))}
+    </TableBody>
             </Table>
           </TableContainer>
 

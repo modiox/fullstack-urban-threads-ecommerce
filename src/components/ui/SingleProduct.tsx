@@ -5,7 +5,6 @@ import { ThemeProvider } from "@emotion/react";
 import { Box, Button, Card, CardActionArea, CardActions, CardMedia, Container, Grid, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CardContent } from "./card";
-import { Storage } from "aws-amplify";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/services/toolkit/store";
 import { addToCart } from "@/services/toolkit/slices/cartSlice";
@@ -18,22 +17,8 @@ interface Props {
 
 const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
  // const {product} = props; 
-  const [imageUrls, setImageUrls] = useState<string[]>([])
 
-  useEffect(() => {
-    const fetchImageUrl = async () => {
-      try {
-        if (product.image && product.image.length > 0) {
-           const urls = await Promise.all(product.image.map((image: string) => Storage.get(image)))
-          setImageUrls(urls)
-        }
-      } catch (error) {
-        console.error("Error fetching image from S3:", error)
-      }
-    }
-
-    fetchImageUrl()
-  }, [product.image])
+  
 
   const dispatch:AppDispatch = useDispatch()
   
@@ -46,18 +31,18 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
   return (
     <ThemeProvider theme={muiTheme}>
       <Grid container spacing={2}>
-     
+{/*      
           {imageUrls.map((url, index) => (
             <CardMedia
               key={index}
               component="img"
               height="200"
-              image={url} // Use the fetched S3 image URL
+              image={url} 
               alt={`${product.productName} image ${index + 1}`}
               sx={{ mb: 1 }} //
             />
           ))}
-      
+       */}
         </Grid>
   
       <Container sx={{ mt: 5 }}>

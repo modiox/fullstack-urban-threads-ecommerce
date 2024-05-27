@@ -18,7 +18,6 @@ interface Props {
 
 const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
  // const {product} = props; 
-  const [showFullDescription, setShowFullDescription] = useState(false)
   const [imageUrls, setImageUrls] = useState<string[]>([])
 
   useEffect(() => {

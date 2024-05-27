@@ -5,7 +5,6 @@ import { PayloadAction, createAsyncThunk, createSelector, createSlice } from "@r
 import { RootState } from "../store";
  
 
-
 const data = getLocalStorage("cart", {cartItems: []})
 const selectCartItems = (state: RootState) => state.cartR.cartItems;
 

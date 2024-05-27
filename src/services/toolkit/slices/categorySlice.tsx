@@ -105,7 +105,6 @@ const categorySlice = createSlice({
 
       builder.addCase(createCategory.fulfilled, (state, action) => {
        state.categories.push(action.payload)
-        //state.totalPages = action.payload.totalPages
     
       })
 

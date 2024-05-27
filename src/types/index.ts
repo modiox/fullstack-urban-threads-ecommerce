@@ -117,3 +117,19 @@ export type CreateProductFormData = {
 
 }
 
+export type Order = { 
+  orderId: string;
+  userId: string;
+  status: string;
+  paymentMethod: string;
+  amount: number;
+  products: Product[];
+}
+
+export type OrderState = { 
+  orders: Order[];
+  orderDetails: Order | null;
+  isLoading: boolean;
+  error: string | null;
+
+}

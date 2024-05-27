@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/services/toolkit/store";
-import { Category, CreateCategoryFormData } from "@/types";
 import {
   Box,
   Button,
   CircularProgress,
-  Container,
-  CssBaseline,
   FormControl,
   Grid,
   TextField,
@@ -23,12 +20,7 @@ import {
   styled,
   tableCellClasses,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
-import useCategoryState from "@/hooks/useCategoryState";
-import { createCategory, fetchCategories, updateCategory } from "@/services/toolkit/slices/categorySlice";
-import SingleCategory from "@/components/ui/SingleCategory";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import muiTheme from "@/util/muiTheme";
 import useUserState from "@/hooks/useUserState";
 import { blockUnblockUser, fetchUsers } from "@/services/toolkit/slices/userSlice";

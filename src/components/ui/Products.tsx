@@ -75,7 +75,7 @@ const Products = () => {
           position: 'relative',
           textAlign: 'center',
           py: 20,
-          background: `url('wallpapper.png') no-repeat center center`,
+          background: `url('wallpaper.png') no-repeat center center`,
           backgroundSize: 'cover',
           color: 'primary.contrastText',
           '&:before': {
@@ -91,10 +91,10 @@ const Products = () => {
         }}>
         <Container maxWidth="md">
           <Typography variant="h2" gutterBottom>
-            Discover Our Products
+            Discover The Lastest Fashion Trends
           </Typography>
           <Typography variant="h5">
-            Find the best products for your needs
+            Find the best pieces for your needs
           </Typography>
         </Container>
       </Box>

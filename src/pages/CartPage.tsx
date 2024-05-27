@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useCartState from '@/hooks/useCartState';
 import { AppDispatch } from '@/services/toolkit/store';
 import { useDispatch } from 'react-redux';
-import { removeAllFromCart, removeFromCart, addToCart, increaseQuantity, decreaseQuantity } from '@/services/toolkit/slices/cartSlice';
+import { removeAllFromCart, increaseQuantity, decreaseQuantity } from '@/services/toolkit/slices/cartSlice';
 import {
   Container,
   Typography,
@@ -16,6 +16,9 @@ import {
 import { Link } from 'react-router-dom';
 import muiTheme from '@/util/muiTheme';
 import useUserState from '@/hooks/useUserState';
+import api from '@/api';
+import { toast } from 'react-toastify';
+import { createOrder, deleteOrder, fetchOrders } from '@/services/toolkit/slices/orderSlice';
 
 interface CartItem {
   productID: string;
@@ -29,6 +32,24 @@ const CartPage = () => {
   const { userData, isLoggedIn } = useUserState();
   const dispatch: AppDispatch = useDispatch();
 
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, [dispatch]);
+
+  const handleCreateOrder = (productID: string) => {
+    dispatch(createOrder({productID, paymentMethod: 'Credit Card' }))
+      .then(() => {
+        toast.success('Order placed successfully!');
+        dispatch(removeAllFromCart()); 
+      })
+      .catch((error) => {
+        console.error('Error placing order:', error);
+        toast.error('Failed to place order. Please try again.');
+      });
+  };
+
+
   const handleRemoveFromCart = () => {
     dispatch(removeAllFromCart());
   };
@@ -40,6 +61,8 @@ const CartPage = () => {
   const handleDecreaseQuantity = (productID: string) => {
     dispatch(decreaseQuantity(productID));
   };
+
+
 
   const cartTotal = () => {
     return cartItems.reduce((total: number, item: CartItem) => total + item.price * item.quantity, 0);
@@ -70,6 +93,16 @@ const CartPage = () => {
                           <Button onClick={() => handleIncreaseQuantity(cartItem.productID)}>+</Button>
                         </Box>
                       </Box>
+
+                      {/* <Button
+                variant="contained"
+                sx={{ mt: 2 }}
+                onClick={() => handleCreateOrder(cartItem.productID)}
+                disabled={!isLoggedIn}
+              >
+                Place Order
+              </Button> */} 
+              
                     </CardContent>
                   </Card>
                 </Grid>
@@ -83,10 +116,11 @@ const CartPage = () => {
                 <Button variant="contained" sx={{ mt: 2, mr: 2 }}>
                   Edit Address
                 </Button>
-                <Button variant="contained" sx={{ mt: 2 }}>
-                  Complete Payment
+                <Button variant="contained" sx={{ mt: 2 }} onClick={() => handleCreateOrder(cartItem.productID)}>
+                  Place Order
                 </Button>
               </Box>
+                  
             ) : (
               <Box mt={2}>
                 <Link to="/login">

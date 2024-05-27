@@ -23,15 +23,10 @@ import {
   styled,
   tableCellClasses,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { AdminSidebar } from "@/components/layout/sidebar/AdminSidebar";
-import useCategoryState from "@/hooks/useCategoryState";
-import { createCategory, fetchCategories, updateCategory } from "@/services/toolkit/slices/categorySlice";
-import SingleCategory from "@/components/ui/SingleCategory";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import muiTheme from "@/util/muiTheme";
 import useUserState from "@/hooks/useUserState";
-import { blockUnblockUser, fetchUsers } from "@/services/toolkit/slices/userSlice";
+import { fetchUsers } from "@/services/toolkit/slices/userSlice";
 
 const OrdersManagement = () => {
   const { users, isLoading, error, totalPages } = useUserState();

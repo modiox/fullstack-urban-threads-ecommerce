@@ -5,9 +5,6 @@ import { Link, useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductsById } from '@/services/toolkit/slices/productSlice'
-import { Storage } from "aws-amplify"
-import { Product } from '@/types'
-
 
 
 
@@ -35,7 +32,7 @@ const ProductDetailsPage = () => {
                 justifyContent="center"
                 alignItems="flex-start"
                 marginTop="80px" 
-                height="calc(100vh - 80px)" // Subtract the navbar height from the viewport height
+                height="calc(100vh - 80px)"
                 spacing={4}
                 sx={{
                   border: "1px solid rgba(0, 0, 0, 0.1)",

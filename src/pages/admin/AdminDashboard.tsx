@@ -10,10 +10,6 @@ import { AppDispatch } from "@/services/toolkit/store"
 
 const AdminDashboard: React.FC = () => {
   const dispatch:AppDispatch = useDispatch()
-  const [productName, setProductName] = useState("")
-  const [description, setDescription] = useState("")
-  const [price, setPrice] = useState(0)
-  const [productID, setProductID] = useState("")
 
   return (
     

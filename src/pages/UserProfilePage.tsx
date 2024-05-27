@@ -5,9 +5,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
   Grid,
   Box,
   Typography,
@@ -43,15 +40,17 @@ const UserProfile: React.FC = () => {
 
   const onSubmit: SubmitHandler<UpdateUserProfile> = async (data) => {
     try {
+      console.log("Submitting update with data:", data);
+      console.log("User ID:", userData?.userID);
+  
       const res = await dispatch(updateUser({ updateUserData: data, userID: userData?.userID }));
-      console.log(res);
+      console.log("Update response:", res);
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
   
-
-
+  
   return (
     <div   className="product-container"
     style={{

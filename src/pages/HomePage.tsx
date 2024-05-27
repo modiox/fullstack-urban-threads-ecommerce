@@ -1,12 +1,10 @@
 import TitlePage from "@/components/ui/TitlePage"
-import React from "react"
 import muiTheme from "@/util/muiTheme"
 import CssBaseline from "@mui/material/CssBaseline"
 import { Box, Button, Container, ThemeProvider, Typography } from "@mui/material"
 import "@/util/App.css"
 import { Link } from "react-router-dom"
 import Products from "@/components/ui/Products"
-import Wallpaper from "@/components/ui/Wallpaper"
 
 export const HomePage = () => {
   return (

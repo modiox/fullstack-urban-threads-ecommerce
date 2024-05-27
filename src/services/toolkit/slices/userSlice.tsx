@@ -10,7 +10,6 @@ const data = getLocalStorage("loginData", {
   token: null,
   isLoggedIn: false
 })
-//localStorage.getItem("loginData") != null ? JSON.parse(String(localStorage.getItem("loginData"))) : []
 
 //type definition of the initialState
 
@@ -50,7 +49,6 @@ export const fetchUsers = createAsyncThunk(
     )
     console.log(response.data)
     return response.data
-    console.log(response.data)
   }
 )
 export const registerUser = createAsyncThunk(
@@ -68,18 +66,25 @@ export const loginUser = createAsyncThunk("userSlice/loginUser", async (userData
 })
 //Update user info
 export const updateUser = createAsyncThunk(
-  "userSlice/updateUser",
+  "users/updateUser",
   async ({ updateUserData, userID }: { updateUserData: UpdateUserProfile, userID: string | undefined }) => {
     if (!userID) {
-      throw new Error("User ID is undefined"); 
+      throw new Error("User ID is undefined");
     }
-    const token = getToken();
-    const response = await api.put(`/account/my-profile/update/`,  { ...updateUserData, userID }, 
-    {headers: { Authorization: `Bearer ${token}`}}); //passing the token 
-    console.log(response.data.data);
-    return response.data.data;
+    const token = data.token; // Using stored token
+
+    try {
+      const response = await api.put(`/users/update`, updateUserData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to update user:", error);
+      throw new Error("Failed to update user");
+    }
   }
 );
+
 // Block/Unblock user action
 export const blockUnblockUser = createAsyncThunk(
   "users/blockUnblockUser",
@@ -116,14 +121,11 @@ const userSlice = createSlice({
         userData: state.userData,
         token: state.token })
     })
-    builder.addCase(updateUser.fulfilled, (state, action) => {
+    .addCase(updateUser.fulfilled, (state, action) => {
       if (state.userData) {
         const updatedUserData = {
           ...state.userData,
-          firstName: action.payload.data.firstName,
-          lastName: action.payload.data.lastName,
-          address: action.payload.data.address,
-          email: action.payload.data.email,
+          ...action.payload.data 
         };
         state.userData = updatedUserData;
         setLocalStorage("loginData", {
@@ -132,7 +134,7 @@ const userSlice = createSlice({
           token: state.token,
         });
       }
-    });
+    })
     //fetch users 
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload.data

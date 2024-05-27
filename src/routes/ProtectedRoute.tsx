@@ -1,15 +1,21 @@
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { Login } from "react-admin";
-import useUserState from "../hooks/useUserState";
-
-
-//to check if the user is logged in or not 
+import useUserState from "@/hooks/useUserState";
 
 const ProtectedRoute = () => {
+  const { isLoggedIn } = useUserState();
+  const navigate = useNavigate();
 
-    const { isLoggedIn } = useUserState()
-    return isLoggedIn ? <Outlet /> : <Login />
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login', { replace: true });
+    } else {
+      navigate('/dashboard/user', { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
 
-}
-export default ProtectedRoute
+  return <Outlet />;
+};
 
+export default ProtectedRoute;

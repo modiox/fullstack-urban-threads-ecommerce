@@ -27,6 +27,9 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
     dispatch(addToCart(product))
 
   }
+  useEffect(() => {
+    console.log("Product Images:", product.image);
+  }, [product.image]);
  
  
   return (
@@ -34,17 +37,23 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
       <Container sx={{ mt: 5 }}>
       <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Card>
-              {product.image?.map((url, index) => (
-                <CardMedia
-                  key={index}
-                  component="img"
-                  height="200"
-                  image={url}
-                  alt={`${product.productName} image ${index + 1}`}
-                  sx={{ mb: 1 }}
-                />
-              ))}
+          <Card>
+              {product.image?.length ? (
+                product.image.map((url, index) => (
+                  <CardMedia
+                    key={index}
+                    component="img"
+                    height="200"
+                    image={url}
+                    alt={`${product.productName} image ${index + 1}`}
+                    sx={{ mb: 1 }}
+                  />
+                ))
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  No images available
+                </Typography>
+              )}
             </Card>
           </Grid>
         </Grid>

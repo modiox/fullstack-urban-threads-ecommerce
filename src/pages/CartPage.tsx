@@ -103,7 +103,6 @@ const CartPage = () => {
           Place Order
         </Button>
 
-    
 
                     </CardContent>
                   </Card>

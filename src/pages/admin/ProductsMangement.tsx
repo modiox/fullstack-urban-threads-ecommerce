@@ -253,14 +253,12 @@ const ProductsManagement = () => {
                   </Grid>
 
                   <Grid item xs={12}>
-                  {/* Add file input field for image upload */}
                   <input
                     type="file"
                     accept="image/*"
                     {...register("imgUrl", {
                       required: "Image is required..Please select a file"
                     })}
-                    onChange={handleImageChange}
                   />
                   {errors.imgUrl && (
                     <Typography variant="body2" color="error">

@@ -77,8 +77,8 @@ const ProductsManagement = () => {
       
       if (data.imgUrl && data.imgUrl.length > 0) {
         const file = data.imgUrl[0];
-        const imageUrl = await uploadImageToCloudinary(file);
-        productWithImage = { ...productWithImage, imgUrl: [imageUrl] };
+        // const imageUrl = await uploadImageToCloudinary(file);
+        // productWithImage = { ...productWithImage, imgUrl: [imageUrl] };
       }
   
       if (isEdit && currentProduct) {

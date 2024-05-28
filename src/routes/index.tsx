@@ -51,16 +51,16 @@ const Index = () => {
            <Route path="admin/categories" element={<CategoriesManagement />} />
          </Route>
          
-          {/* <Route path="/dashboard" element={<ProtectedRoute/>} />
+          <Route path="/dashboard" element={<ProtectedRoute/>} />
          <Route path="/dashboard/user" element={<UserDashboard/>}/>
          <Route path="/dashboard/user/profile" element={<UserProfilePage />}/>
-         <Route path="/dashboard/user/orders" element={<UserOrderPage />}/>  */}
+         <Route path="/dashboard/user/orders" element={<UserOrderPage />}/> 
 
-         <Route path="/dashboard" element={<ProtectedRoute />}>
+         {/* <Route path="/dashboard" element={<ProtectedRoute />}>
           <Route path="user" element={<UserDashboard />} />
           <Route path="user/profile" element={<UserProfilePage />} />
           <Route path="user/orders" element={<UserOrderPage />} />
-          </Route>
+          </Route> */}
 
        
 

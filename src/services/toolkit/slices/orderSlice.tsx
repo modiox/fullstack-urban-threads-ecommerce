@@ -39,6 +39,8 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+//Will redefine my backend later to make it accept more products within one order:) and use a ... 
+
 export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderID: string) => {
   await api.delete(`/api/history/my-orders/${orderID}/delete`);
   return orderID;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, CardContent, Grid, ThemeProvider, Typography } from "@mui/material"
+import { Button, CardContent, Grid, ThemeProvider, Typography, CardMedia } from "@mui/material"
 import muiTheme from "@/util/muiTheme"
 import { Link, useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
@@ -12,23 +12,29 @@ import { Product } from '@/types'
 const ProductDetailsPage = () => {
 
      const { product, isLoading, error } = useSelector((state: RootState) => state.productR)
+    const {productID} = useParams<{productID: string}>()
+    const {imgUrl} = useParams<{imgUrl: string}>() 
 
      const dispatch: AppDispatch = useDispatch()
 
      useEffect(() => {
-       const fetchData = async () => {
-         await dispatch(fetchProductsById(productID))
-       }
-       fetchData()
-     }, [])
+        const fetchData = async () => {
+          await dispatch(fetchProductsById(productID));
+        };
+        if (productID) { // Make sure productID is not undefined
+          fetchData();
+        }
+      }, [dispatch, productID]); 
 
-    //  useEffect(() => {
-    //   }, [product.imgUrl]);
+      const productImages = product ? (Array.isArray(product.imgUrl) ? product.imgUrl : [product.imgUrl]) : [];
     
 
 
-    const {productID} = useParams<{productID: string}>()
-    const {imgUrl} = useParams<{imgUrl: string}>() 
+      useEffect(() => {
+      }, [productImages]); // Dependency should be productImages
+
+   
+
     
   return (
     <ThemeProvider theme={muiTheme}>
@@ -47,12 +53,32 @@ const ProductDetailsPage = () => {
               }}
             >
                 <Grid item xs={12} md={4} style={{ paddingLeft: '20px' }}>
-                    {/* Will place the picture picture component here */}
-                 {product && ( 
-                    <div>  
-                        <Typography variant="h5" sx={{margin: "20px"}}>{imgUrl}</Typography>
-                    </div> 
-                 )}  
+
+                {productImages.length ? (
+                 productImages.map((item, index) => {
+                 const imageUrl = item instanceof File ? URL.createObjectURL(item) : item;
+
+                  return (
+                  <CardMedia
+                 key={index}
+                component="img"
+                 height="auto"
+                  content="center"
+                  image={imageUrl}
+               
+                sx={{ width: '100%', maxWidth: '100%', height: 'auto', mb: 2, borderRadius: 1, mt: 5, marginLeft: 13 }}
+
+                  />
+                  );
+                   })
+                  ) : (       
+                  <Typography variant="body2" color="text.secondary">
+                    No images available
+                  </Typography>
+                )}
+                    
+
+ 
     
                 </Grid>
                 <Grid item xs={12} md={8}>

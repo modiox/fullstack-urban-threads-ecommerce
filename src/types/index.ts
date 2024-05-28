@@ -1,23 +1,42 @@
 export interface Product {
+  productID: string
+  productName: string
+  description: string
+  price: number
+  quantity: number
+  categoryID: string
+  imgUrl: File[] | string[];
+  categories?: Category[]
+  createdAt: string
+}
+export interface CreateProductFormData {
+  productID: string
+  productName: string
+  price: number
+  description: string
+  categoryID: string
+  quantity: number
+  imgUrl: File[] | string[];
+
+}
+
+export interface CreateProduct {
   productID: string;
   productName: string;
-  description: string;
   price: number;
-  quantity: number;
+  description: string;
   categoryID: string;
-  imgUrl: string[]
-  categories: Category[]
-  createdAt: string
+  quantity: number;
+  imgUrl: File[] | string[]; // Array of strings for URLs
 }
 
 export interface ProductState {
-  products: Product[];
-  totalPages: number;
-  product: Product | null;
-  error: string | null;
-  isLoading: boolean;
+  products: Product[]
+  totalPages: number
+  product: Product | null
+  error: string | null
+  isLoading: boolean
 }
-
 
 export type Category = { 
   categoryID: string
@@ -117,16 +136,6 @@ export type CreateCategoryFormData = {
 
 }
 
-export type CreateProductFormData = { 
-  productID: string
-  productName: string 
-  price: number 
-  description: string 
-  categoryID: string 
-  quantity: number 
-  imgUrl:  string[]
-
-}
 
 //PaymentMethod { CreditCard = 0, ApplePay = 1, Visa = 2, Cash = 3, PayPal = 4 }
 //OrderStatus { Creating = 0, Pending = 1, Processing = 2, Shipped = 3, Delivered = 4 }
@@ -147,13 +156,11 @@ export interface OrderState  {
 
 }
 
-export type CreateProductForBackend = { 
-  imgUrl?: string[] 
-  productName: string 
-  price: number 
-  description: string 
-  categoryID: string 
-  quantity: number 
-  
-
+export type CreateProductForBackend = {
+  imgUrl?: string[]
+  productName: string
+  price: number
+  description: string
+  categoryID: string
+  quantity: number
 }

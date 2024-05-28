@@ -49,18 +49,22 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
                 }}
               >
                 {productImages.length ? (
-                  productImages.map((url, index) => (
-                    <CardMedia
-                      key={index}
-                      component="img"
-                      height="auto"
-                      content="center"
-                      image={url}
-                      alt={`${product.productName} image ${index + 1}`}
-                      sx={{ width: '180%', maxWidth: { xs: '80%', sm: '80%', md: '200%' }, mb: 2, borderRadius: 1, mt:5, marginLeft: 13 }}
-                    />
-                  ))
-                ) : (
+                 productImages.map((item, index) => {
+                 const imageUrl = item instanceof File ? URL.createObjectURL(item) : item;
+
+                  return (
+                  <CardMedia
+                 key={index}
+                component="img"
+                 height="auto"
+                  content="center"
+                  image={imageUrl}
+                  alt={`${product.productName} image ${index + 1}`}
+                 sx={{ width: '180%', maxWidth: { xs: '80%', sm: '80%', md: '200%' }, mb: 2, borderRadius: 1, mt: 5, marginLeft: 13 }}
+                  />
+                  );
+                   })
+                  ) : (       
                   <Typography variant="body2" color="text.secondary">
                     No images available
                   </Typography>

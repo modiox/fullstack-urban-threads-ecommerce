@@ -5,7 +5,7 @@ let baseURL = "https://sda-online-2-csharp-backend-teamwork-s2a2.onrender.com/ap
 
 if (!isDevelopment) {
   // Update this later when you have a working backend server
-  baseURL = 'https://sda-online-2-csharp-backend-teamwork-s2a2.onrender.com/api' 
+  baseURL = 'http://localhost:5125/api' 
 }
 
 //http://localhost:5125/api

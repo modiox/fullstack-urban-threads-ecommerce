@@ -60,9 +60,9 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
                   content="center"
                   image={imageUrl}
                   alt={`${product.productName} image ${index + 1}`}
-                 sx={{ width: '180%', maxWidth: { xs: '80%', sm: '80%', md: '200%' }, mb: 2, borderRadius: 1, mt: 5, marginLeft: 13 }}
+                 sx={{ width:{ lg:'180%', sm:'190%', md:'190%', xl:'190%'}, maxWidth: { xs: '80%', sm: '80%', md: '200%', lg: '250%' }, mb: 2, borderRadius: 1, mt: 5, marginLeft: { xl:17, lg: 17, sm:1 }}}
                   />
-                  );
+                );
                    })
                   ) : (       
                   <Typography variant="body2" color="text.secondary">

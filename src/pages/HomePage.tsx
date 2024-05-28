@@ -32,7 +32,7 @@ export const HomePage = () => {
           textAlign: 'center',
           py: 30,
           mt: 10, 
-          background: `url('footwear.png') no-repeat center center`,
+          background: `url('/footwear.png') no-repeat center center`,
           backgroundSize: 'cover',
           color: 'primary.contrastText',
           '&:before': {

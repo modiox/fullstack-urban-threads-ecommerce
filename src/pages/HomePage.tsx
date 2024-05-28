@@ -5,6 +5,7 @@ import { Box, Button, Container, ThemeProvider, Typography } from "@mui/material
 import "@/util/App.css"
 import { Link } from "react-router-dom"
 import Products from "@/components/ui/Products"
+import img from "./../../img/footwear.png"
 
 export const HomePage = () => {
   return (

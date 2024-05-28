@@ -28,33 +28,44 @@ const SingleProduct: React.FC<Props> = ({ product, categoryID }) =>{
 
   }
   useEffect(() => {
-    console.log("Product Images:", product.image);
-  }, [product.image]);
- 
+    console.log("Product Images:", product.imgUrl);
+  }, [product.imgUrl]);
+
+  const productImages = Array.isArray(product.imgUrl) ? product.imgUrl : [product.imgUrl];
  
   return (
     <ThemeProvider theme={muiTheme}>
-      <Container sx={{ mt: 5 }}>
-      <Grid container spacing={2}>
+      <Container sx={{ mt: 3 }}>
+      <Grid container spacing={1}>
           <Grid item xs={12} md={6}>
-          <Card>
-              {product.image?.length ? (
-                product.image.map((url, index) => (
-                  <CardMedia
-                    key={index}
-                    component="img"
-                    height="200"
-                    image={url}
-                    alt={`${product.productName} image ${index + 1}`}
-                    sx={{ mb: 1 }}
-                  />
-                ))
-              ) : (
-                <Typography variant="body2" color="text.secondary">
-                  No images available
-                </Typography>
-              )}
-            </Card>
+          <Box
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                {productImages.length ? (
+                  productImages.map((url, index) => (
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      height="auto"
+                      content="center"
+                      image={url}
+                      alt={`${product.productName} image ${index + 1}`}
+                      sx={{ width: '180%', maxWidth: { xs: '80%', sm: '80%', md: '200%' }, mb: 2, borderRadius: 1, mt:5, marginLeft: 13 }}
+                    />
+                  ))
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    No images available
+                  </Typography>
+                )}
+              </Box>
           </Grid>
         </Grid>
         <Card> 

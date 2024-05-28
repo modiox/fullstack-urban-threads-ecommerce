@@ -68,23 +68,25 @@ const ProductsManagement = () => {
 
   const { register, handleSubmit, control, formState: { errors }, reset } = useForm<CreateProductFormData>();
 
+  const [imgUrls, setImgUrls] = useState<string[]>([]);
+
 
   const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
     try {
+      let productWithImage: CreateProductFormData = { ...data };
+      
+      if (data.imgUrl && data.imgUrl.length > 0) {
+        const file = data.imgUrl[0];
+        const imageUrl = await uploadImageToCloudinary(file);
+        productWithImage = { ...productWithImage, imgUrl: [imageUrl] };
+      }
+  
       if (isEdit && currentProduct) {
-        await dispatch(updateProduct({ ...currentProduct, ...data }));
+        await dispatch(updateProduct({ ...currentProduct, ...productWithImage }));
       } else {
-        await dispatch(createProduct(data));
+        await dispatch(createProduct(productWithImage));
       }
-      let imageUrl = " "
-      if (data.imgUrl && data.imgUrl.length > 0){ 
-        const file = data.imgUrl[0]
-        imageUrl = await uploadImageToCloudinary(file)
-      }
-      const productData = { 
-        ...data, 
-        imgUrl: imageUrl
-      }
+  
       setIsFormOpen(false);
       setIsEdit(false);
       setCurrentProduct(null);
@@ -94,6 +96,7 @@ const ProductsManagement = () => {
       console.log(err);
     }
   };
+  
 
   const handleEditProduct = (product: Product) => {
     setIsFormOpen(true);
@@ -112,11 +115,12 @@ const ProductsManagement = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setImagePreview(URL.createObjectURL(file))
+    const files = e.target.files;
+    if (files) {
+      const urls = Array.from(files).map((file) => URL.createObjectURL(file));
+      setImgUrls(urls);
     }
-  }
+  };
 
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => Math.max(currentPage - 1, 1));
@@ -254,12 +258,13 @@ const ProductsManagement = () => {
 
                   <Grid item xs={12}>
                   <input
-                    type="file"
+                   type="file"
                     accept="image/*"
-                    {...register("imgUrl", {
-                      required: "Image is required..Please select a file"
-                    })}
-                  />
+                     multiple
+                     {...register("imgUrl", {
+                      required: "Image is required.. Please select file(s)."
+                       })}
+                        />
                   {errors.imgUrl && (
                     <Typography variant="body2" color="error">
                       {errors.imgUrl.message}

@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { AppDispatch, RootState } from '@/services/toolkit/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductsById } from '@/services/toolkit/slices/productSlice'
+import { Product } from '@/types'
 
 
 
@@ -21,9 +22,13 @@ const ProductDetailsPage = () => {
        fetchData()
      }, [])
 
+    //  useEffect(() => {
+    //   }, [product.imgUrl]);
+    
+
 
     const {productID} = useParams<{productID: string}>()
-    console.log(productID) 
+    const {imgUrl} = useParams<{imgUrl: string}>() 
     
   return (
     <ThemeProvider theme={muiTheme}>
@@ -43,7 +48,11 @@ const ProductDetailsPage = () => {
             >
                 <Grid item xs={12} md={4} style={{ paddingLeft: '20px' }}>
                     {/* Will place the picture picture component here */}
-                    {/* <img src="image-url" alt="Product Image" /> */}
+                 {product && ( 
+                    <div>  
+                        <Typography variant="h5" sx={{margin: "20px"}}>{imgUrl}</Typography>
+                    </div> 
+                 )}  
     
                 </Grid>
                 <Grid item xs={12} md={8}>

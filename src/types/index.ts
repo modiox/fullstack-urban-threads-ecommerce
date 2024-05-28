@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   quantity: number;
   categoryID: string;
-  image: string[]
+  imgUrl: string[]
   categories: Category[]
   createdAt: string
 }
@@ -98,7 +98,6 @@ export type RegisterFormData = {
   username: string
   email: string 
   password: string 
-  //image: FileList
   phone: string 
   address: string
 }
@@ -125,8 +124,7 @@ export type CreateProductFormData = {
   description: string 
   categoryID: string 
   quantity: number 
-  imgUrl?: FileList
-  //category: Category
+  imgUrl:  string[]
 
 }
 
@@ -150,7 +148,7 @@ export interface OrderState  {
 }
 
 export type CreateProductForBackend = { 
-  imgUrl?: string 
+  imgUrl?: string[] 
   productName: string 
   price: number 
   description: string 

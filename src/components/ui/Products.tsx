@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import "@/util/App.css";
+import img from "./../../img/Wallpaper.png"
 
 const Products = () => {
   const { products, isLoading, error, totalPages } = useSelector(

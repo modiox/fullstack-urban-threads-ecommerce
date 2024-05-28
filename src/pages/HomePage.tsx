@@ -5,7 +5,6 @@ import { Box, Button, Container, ThemeProvider, Typography } from "@mui/material
 import "@/util/App.css"
 import { Link } from "react-router-dom"
 import Products from "@/components/ui/Products"
-import img from "./../../img/footwear.png"
 
 export const HomePage = () => {
   return (
@@ -33,7 +32,7 @@ export const HomePage = () => {
           textAlign: 'center',
           py: 30,
           mt: 10, 
-          background: `url('img/footwear.png') no-repeat center center`,
+          background: `url('footwear.png') no-repeat center center`,
           backgroundSize: 'cover',
           color: 'primary.contrastText',
           '&:before': {

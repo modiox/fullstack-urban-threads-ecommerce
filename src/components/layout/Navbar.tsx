@@ -28,7 +28,7 @@ import useCategoryState from "@/hooks/useCategoryState"
 import { fetchCategories } from "@/services/toolkit/slices/categorySlice"
 import useCartState from "@/hooks/useCartState"
 import { selectCartItemCount } from "@/services/toolkit/slices/cartSlice";
-import img from "@/img/Logo.png"
+import img from "/Logo.png"
 
 
 const Navbar = () => {

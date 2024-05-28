@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import "@/util/App.css";
-import img from "./../../img/Wallpaper.png"
+//import img from "./../../img/Wallpaper.png"
 
 const Products = () => {
   const { products, isLoading, error, totalPages } = useSelector(
@@ -76,7 +76,7 @@ const Products = () => {
           position: 'relative',
           textAlign: 'center',
           py: 20,
-          background: `url('img/wallpaper.png') no-repeat center center`,
+          background: `url('wallpaper.png') no-repeat center center`,
           backgroundSize: 'cover',
           color: 'primary.contrastText',
           '&:before': {
